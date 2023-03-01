@@ -21,5 +21,9 @@
 	},
     "repository": {
         "url": "https://github.com/xl-soft/xl-ui.git"
-    }   
+    },
+    "exports": {
+        "./components": "./src/lib/index.js",
+        "./icons": "./src/assets/icons/icons.js"
+    }
 }
