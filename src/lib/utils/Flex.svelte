@@ -1,19 +1,18 @@
-<script lang="ts">
-    export let width = "100%", heigth = "100%", direction = "column", justify = "center", align = "center", wrap = "nowrap", aligncont="center", gap = "10px"
+<script>
+    export let direction = "column", justify = "center", align = "center", wrap = "nowrap", aligncont="center", gap = "25px"
     let flex = `
-    width: ${width}; 
-    height: ${heigth}; 
     display: flex; 
-    flex-direction: ${direction}
+    flex-direction: ${direction};
     flex-wrap: ${wrap};
     justify-content: ${justify};
 	align-items: ${align};
     align-content: ${aligncont};
-    gap: ${gap}
+    gap: ${gap};
     `
+
+    export let style
 </script>
 
-<div class="xl-ui-flex" style="{flex}">
+<div class={`xl-ui-flex`} style={`${flex}${style || ''}`}>
     <slot></slot>
 </div>
-

@@ -1,16 +1,16 @@
 <script>
     // @ts-nocheck
     import "../../assets/fonts/font-faces.css"
-    import { theme } from "./stores";
-    export let mode = 'dark'
-    theme.set(mode)
+    export let theme = 'dark'
+    import { theme as color } from "./stores";
+    color.set(theme)
     let vh = window.innerHeight * 0.01
     window.addEventListener('resize', function(event) {
         vh = window.innerHeight * 0.01
     }, true);
 </script>
 
-<main class="xl-ui-wrapper" theme="{$theme}" style="height: {vh * 100}px; min-height: {vh * 100}px; width: 100vw;">
+<main class={`xl-ui-wrapper`} style={`height: ${vh * 100}px; min-height: ${vh * 100}px; width: 100vw;`} theme={theme}>
     <slot></slot>
 </main>
 
@@ -106,6 +106,30 @@
         margin: 0;
         font-family: "Rubik";
         overflow: hidden;
+    }
+
+    :global(main) {
+        padding: 50px;
+    }
+
+    :global(h1) {
+        font-weight: 400;
+        font-size: 36px;
+        line-height: 43px;
+    }
+
+    :global(h2) {
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 28px;
+        opacity: .5;
+    }
+    
+
+    :global(*) {
+        box-sizing: border-box;
+        margin: 0;
+        user-select: none;
     }
 
     :global(.xl-ui-wrapper[theme="dark"]) {
