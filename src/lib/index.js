@@ -30,7 +30,7 @@
         IconsList,
 
         //* STRUCTURE
-        Main, Flex, 
+        Main, Flex, Text,
 
         //* MEDIA
         Image, Icon,
