@@ -15,8 +15,9 @@ function exclude(file) {
 
 exclude('gen.cjs')
 exclude('icons.js')
+exclude('doc.js')
 
-
+let files = []
 let imports = []
 categories.forEach(category => {
     let folder = fs.readdirSync(path.join(__dirname + `/${category}`));
@@ -26,8 +27,9 @@ categories.forEach(category => {
         let name = image.split('.'); name = name[0]
         imports.push(`\n`)
         imports.push(`// ${image} export\n`.toUpperCase())
-        imports.push(`export { default as ${category}_${name}_icon } from "./${category}/${image}"`)
+        imports.push(`export { default as ${category}_${name} } from "./${category}/${image}"`)
         imports.push(`\n`)
+        files.push(`${category}_${name}`)
     });
     imports.push(`\n`)
     imports.push(`\n`)
@@ -35,3 +37,14 @@ categories.forEach(category => {
 });
 
 fs.writeFileSync(path.join(__dirname + '/icons.js'), imports.join(''))
+
+let doc = []
+doc.push('/** @type {string} icon\n')
+doc.push('  * Modifyed Streamline HQ Core Line Icons\n')
+doc.push('  * --------------------------------------\n')
+files.forEach(file => {
+    doc.push(`  * ${file}\n`)
+    doc.push(`  * \n`)
+});
+doc.push('*/')
+fs.writeFileSync(path.join(__dirname + '/doc.js'), doc.join(''))
