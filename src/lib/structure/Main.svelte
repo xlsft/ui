@@ -1,7 +1,7 @@
 <script>
     // @ts-nocheck
     import "../../assets/fonts/font-faces.css"
-    export let theme = 'dark'
+    export let theme = 'system'
     import { theme as color, vh, accent } from "../stores";
     import { setContext } from 'svelte';
     color.set(theme)
@@ -447,6 +447,7 @@
 
     :global(body) {
         margin: 0;
+        transition: 0s;
         font-family: "Rubik";
         overflow: hidden;
     }
