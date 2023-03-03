@@ -1,6 +1,6 @@
 {
 	"name": "@xl-soft/xl-ui",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package"
@@ -21,9 +21,5 @@
 	},
     "repository": {
         "url": "https://github.com/xl-soft/xl-ui.git"
-    },
-    "exports": {
-        "./components": "./src/lib/index.js",
-        "./icons": "./src/assets/icons/icons.js"
     }
 }
