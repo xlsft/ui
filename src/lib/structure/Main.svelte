@@ -233,11 +233,11 @@
     }
     :global(.xl-ui[accent="orange"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
-        --theme-accent-color-1000: var(--orange-600);
-        --theme-accent-color-900: var(--orange-700);
+        --theme-accent-color-1000: var(--orange-1000);
+        --theme-accent-color-900: var(--orange-900);
         --theme-accent-color-800: var(--orange-800);
-        --theme-accent-color-700: var(--orange-900);
-        --theme-accent-color-600: var(--orange-1000);
+        --theme-accent-color-700: var(--orange-700);
+        --theme-accent-color-600: var(--orange-600);
     }
 
     /* -------------------------------------------*/
@@ -256,11 +256,11 @@
     }
     :global(.xl-ui[accent="lime"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
-        --theme-accent-color-1000: var(--lime-600);
-        --theme-accent-color-900: var(--lime-700);
+        --theme-accent-color-1000: var(--lime-1000);
+        --theme-accent-color-900: var(--lime-900);
         --theme-accent-color-800: var(--lime-800);
-        --theme-accent-color-700: var(--lime-900);
-        --theme-accent-color-600: var(--lime-1000);
+        --theme-accent-color-700: var(--lime-700);
+        --theme-accent-color-600: var(--lime-600);
     }
 
     /* -------------------------------------------*/
@@ -279,11 +279,11 @@
     }
     :global(.xl-ui[accent="green"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-1000);
-        --theme-accent-color-1000: var(--green-600);
-        --theme-accent-color-900: var(--green-700);
+        --theme-accent-color-1000: var(--green-1000);
+        --theme-accent-color-900: var(--green-900);
         --theme-accent-color-800: var(--green-800);
-        --theme-accent-color-700: var(--green-900);
-        --theme-accent-color-600: var(--green-1000);
+        --theme-accent-color-700: var(--green-700);
+        --theme-accent-color-600: var(--green-600);
     }
 
     /* -------------------------------------------*/
@@ -302,11 +302,11 @@
     }
     :global(.xl-ui[accent="cyan"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-1000);
-        --theme-accent-color-1000: var(--cyan-600);
-        --theme-accent-color-900: var(--cyan-700);
+        --theme-accent-color-1000: var(--cyan-1000);
+        --theme-accent-color-900: var(--cyan-900);
         --theme-accent-color-800: var(--cyan-800);
-        --theme-accent-color-700: var(--cyan-900);
-        --theme-accent-color-600: var(--cyan-1000);
+        --theme-accent-color-700: var(--cyan-700);
+        --theme-accent-color-600: var(--cyan-600);
     }
 
     /* -------------------------------------------*/
@@ -325,11 +325,11 @@
     }
     :global(.xl-ui[accent="blue"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
-        --theme-accent-color-1000: var(--blue-600);
-        --theme-accent-color-900: var(--blue-700);
+        --theme-accent-color-1000: var(--blue-1000);
+        --theme-accent-color-900: var(--blue-900);
         --theme-accent-color-800: var(--blue-800);
-        --theme-accent-color-700: var(--blue-900);
-        --theme-accent-color-600: var(--blue-1000);
+        --theme-accent-color-700: var(--blue-700);
+        --theme-accent-color-600: var(--blue-600);
     }
 
     /* -------------------------------------------*/
@@ -348,11 +348,11 @@
     }
     :global(.xl-ui[accent="royal"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
-        --theme-accent-color-1000: var(--royal-600);
-        --theme-accent-color-900: var(--royal-700);
+        --theme-accent-color-1000: var(--royal-1000);
+        --theme-accent-color-900: var(--royal-900);
         --theme-accent-color-800: var(--royal-800);
-        --theme-accent-color-700: var(--royal-900);
-        --theme-accent-color-600: var(--royal-1000);
+        --theme-accent-color-700: var(--royal-700);
+        --theme-accent-color-600: var(--royal-600);
     }
 
     /* -------------------------------------------*/
@@ -371,11 +371,11 @@
     }
     :global(.xl-ui[accent="violet"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
-        --theme-accent-color-1000: var(--violet-600);
-        --theme-accent-color-900: var(--violet-700);
+        --theme-accent-color-1000: var(--violet-1000);
+        --theme-accent-color-900: var(--violet-900);
         --theme-accent-color-800: var(--violet-800);
-        --theme-accent-color-700: var(--violet-900);
-        --theme-accent-color-600: var(--violet-1000);
+        --theme-accent-color-700: var(--violet-700);
+        --theme-accent-color-600: var(--violet-600);
     }
 
     /* -------------------------------------------*/
@@ -394,11 +394,11 @@
     }
     :global(.xl-ui[accent="purple"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
-        --theme-accent-color-1000: var(--purple-600);
-        --theme-accent-color-900: var(--purple-700);
+        --theme-accent-color-1000: var(--purple-1000);
+        --theme-accent-color-900: var(--purple-900);
         --theme-accent-color-800: var(--purple-800);
-        --theme-accent-color-700: var(--purple-900);
-        --theme-accent-color-600: var(--purple-1000);
+        --theme-accent-color-700: var(--purple-700);
+        --theme-accent-color-600: var(--purple-600);
     }
 
     /* -------------------------------------------*/
@@ -417,11 +417,11 @@
     }
     :global(.xl-ui[accent="pink"][theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
-        --theme-accent-color-1000: var(--pink-600);
-        --theme-accent-color-900: var(--pink-700);
+        --theme-accent-color-1000: var(--pink-1000);
+        --theme-accent-color-900: var(--pink-900);
         --theme-accent-color-800: var(--pink-800);
-        --theme-accent-color-700: var(--pink-900);
-        --theme-accent-color-600: var(--pink-1000);
+        --theme-accent-color-700: var(--pink-700);
+        --theme-accent-color-600: var(--pink-600);
     }
 
     /* -------------------------------------------*/
