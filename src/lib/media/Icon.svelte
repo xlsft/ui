@@ -604,6 +604,4 @@
     $: if (noinvert == true) filter = ""
 </script>
 
-<div class={`xl-ui-icon`} style={`height:${size};${style || ''}`}>
-    <img src={eval(icon)} alt={icon} style="height: 100%; pointer-events: none; {filter};" noinvert={noinvert}>
-</div>
+<img class={`xl-ui-icon`} src={eval(icon)} alt={icon} style="height:{size}; width:{size}; pointer-events: none; {filter}; {style}" noinvert={noinvert}>
