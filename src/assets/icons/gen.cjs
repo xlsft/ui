@@ -27,7 +27,7 @@ categories.forEach(category => {
         let name = image.split('.'); name = name[0]
         imports.push(`\n`)
         imports.push(`// ${image} export\n`.toUpperCase())
-        imports.push(`export { default as ${category}_${name} } from "./${category}/${image}"`)
+        imports.push(`import ${category}_${name} from "../../assets/icons/${category}/${image}"`)
         imports.push(`\n`)
         files.push(`${category}_${name}`)
     });

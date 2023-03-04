@@ -4,7 +4,11 @@
     
 </script>
 
-<svelte:element this={type} class="xl-id-text" style={`height: ${height}; width: ${width}; text-align: ${align};${style || ''}`}>
+<svelte:element this={type} class="xl-id-text" style={`
+    height: ${height}; 
+    width: ${width}; 
+    text-align: ${align};${style || ''}
+`}>
     <slot/>
 </svelte:element>
 

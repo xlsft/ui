@@ -21,7 +21,11 @@
 </script>
 
 <main class={`xl-ui`} theme={$color} accent={$accent}>
-    <div class={`xl-ui-wrapper`} style={`height: ${$vh * 100}px; min-height: ${$vh * 100}px; width: 100vw;`}>
+    <div class={`xl-ui-wrapper`} style={`
+    height: ${$vh * 100}px;
+    min-height: ${$vh * 100}px; 
+    width: 100vw;
+    `}>
         <slot></slot>
     </div>
 </main>
@@ -142,6 +146,7 @@
         user-select: none;
         flex-shrink: 0;
         transition: .4s ease-in-out;
+        font-family: "Rubik";
     }
 
     /* ----------------light theme---------------- */
@@ -448,7 +453,6 @@
     :global(body) {
         margin: 0;
         transition: 0s;
-        font-family: "Rubik";
         overflow: hidden;
     }
 </style>
