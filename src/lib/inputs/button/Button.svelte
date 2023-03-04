@@ -52,7 +52,7 @@
         color: var(--theme-accent-text-color);
         background-color: var(--theme-accent-color-1000);
     }
-    .xl-ui-button[color="cobalt"]:hover {
+    .xl-ui-button[color="accent"]:hover {
         background-color: var(--theme-accent-color-700);
     }
     

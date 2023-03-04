@@ -1,5 +1,5 @@
 <script>
-    export let disabled = false, style = "", compact = false, transparent = false, color = "blue", width = "max-content", height = "max-content"
+    export let disabled = false, style = "", compact = false, transparent = false, color = "accent", width = "max-content", height = "max-content"
 
     import Button from "./Button.svelte";
     import Icon from "../../media/Icon.svelte";
