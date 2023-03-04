@@ -594,14 +594,18 @@
     // TRIANGLE.SVG EXPORT
     import shape_triangle from "../../assets/icons/shape/triangle.svg"
 
-
-
-
-
-    let filter
-    $: if ($theme == "dark") filter = ""
-    $: if ($theme == "light") filter = "filter: invert(100%);"
-    $: if (noinvert == true) filter = ""
 </script>
 
-<img class={`xl-ui-icon`} src={eval(icon)} alt={icon} style="height:{size}; width:{size}; pointer-events: none; {filter}; {style}" noinvert={noinvert}>
+<img class={`xl-ui-icon`} src={eval(icon)} alt={icon} style="height:{size}; pointer-events: none; {style}" noinvert={noinvert} theme={$theme}>
+
+<style>
+    .xl-ui-icon[theme="dark"] {
+        filter: invert(0%)
+    }
+    .xl-ui-icon[theme="light"] {
+        filter: invert(100%)
+    }
+    .xl-ui-icon[noinvert="true"] {
+        filter: invert(0%)
+    }
+</style>

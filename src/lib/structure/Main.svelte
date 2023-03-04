@@ -1,11 +1,10 @@
 <script>
     // @ts-nocheck
     import "../../assets/fonts/font-faces.css"
-    export let theme = 'system'
-    import { theme as color, vh, accent } from "../stores";
-    import { setContext } from 'svelte';
+    export let theme = 'system', accent = "blue"
+    import { theme as color, vh, accent as accolor } from "../stores";
     color.set(theme)
-    accent.set('sky')
+    accolor.set(accent)
     vh.set(window.innerHeight * 0.01)
     window.addEventListener('resize', function(event) {
         vh.set(window.innerHeight * 0.01)
@@ -20,14 +19,14 @@
     }
 </script>
 
-<main class={`xl-ui`} theme={$color} accent={$accent} style="transition: background-color 0.4s ease-in-out;">
+<main class={`xl-ui`} theme={$color} accent={$accolor} style="transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;">
     <div class={`xl-ui-wrapper`} style={`
     height: ${$vh * 100}px;
     min-height: ${$vh * 100}px; 
     width: 100vw;
-    transition: background-color 0.4s ease-in-out;
+    transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;;
     `}>
-        <slot></slot>
+        <slot/>
     </div>
 </main>
 
@@ -146,7 +145,7 @@
         margin: 0;
         user-select: none;
         flex-shrink: 0;
-        transition: .4s ease-in-out;
+        transition: .4s cubic-bezier(0,0,0,1) 0s;
         font-family: "Rubik";
     }
 

@@ -11,7 +11,7 @@
     import Option from "../lib/inputs/option/Option.svelte";
 </script>
 
-<Flex direction="row" gap="100px" align="center" justify="center" wrap style="margin: 50px">
+<!-- <Flex direction="row" gap="100px" align="center" justify="center" wrap style="margin: 50px">
     <Flex align="flex-start">
         <Text type="h1">
             XL UI - лучший кит
@@ -25,6 +25,16 @@
 
 <Option>
 
-</Option>
+</Option> -->
+
+<Icon icon="animated_loader" size="30px" noinvert/>
+<Text type="h1">
+ААААААААААААААА
+</Text>
+<Button>
+    aksl;dka;sdkl;sa
+</Button>
+
+<ThemeSwitch/>
 
 

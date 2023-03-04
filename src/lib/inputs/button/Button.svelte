@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher()
-    export let disabled = false, style = "", compact = "", transparent = "", color = "accent", width = "", height = ""
+    export let disabled = false, style = "", compact = "", transparent = "", color = "accent", width = "max-content", height = "max-content"
 </script>
 
 
