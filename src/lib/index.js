@@ -17,7 +17,7 @@
 
     //* INPUTS
     import Button from "./inputs/button/Button.svelte" // Button
-    import ThemeSwitch from "./inputs/button/ThemeSwitch.svelte" // Theme switcher between light and dark
+    import Switch from "./inputs/switch/Switch.svelte" // Switch
 
 
 // EXPORTS
@@ -36,5 +36,5 @@
         Image, Icon,
 
         //* INPUTS
-        Button, ThemeSwitch
+        Button, Switch
     }

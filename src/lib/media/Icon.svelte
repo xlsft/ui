@@ -1,5 +1,5 @@
 <script>
-    export let style = "", size = "20px", noinvert = false,
+    export let style = "", size = "20px", noinvert = false, invert = false,
     /** @type {string} icon
      * Modified Streamline HQ Core Line Icons
      * --------------------------------------
@@ -596,7 +596,7 @@
 
 </script>
 
-<img class={`xl-ui-icon`} src={eval(icon)} alt={icon} style="height:{size}; pointer-events: none; {style}" noinvert={noinvert} theme={$theme}>
+<img class={`xl-ui-icon`} src={eval(icon)} alt={icon} style="height:{size}; pointer-events: none; {style}" noinvert={noinvert} theme={$theme} invert={invert}>
 
 <style>
     .xl-ui-icon[theme="dark"] {
@@ -607,5 +607,8 @@
     }
     .xl-ui-icon[noinvert="true"] {
         filter: invert(0%)
+    }
+    .xl-ui-icon[invert="true"] {
+        filter: invert(100%)
     }
 </style>

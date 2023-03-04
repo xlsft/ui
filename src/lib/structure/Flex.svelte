@@ -3,7 +3,7 @@
 
     export let style = "", width = "", height = "" // global exports
     export let x = false, y = false, bar = false // overflow exports
-    export let direction = "column", justify = "", align = "", wrap = false, aligncont="center", gap = "25px" // flex exports
+    export let direction = "row", justify = "center", align = "center", wrap = false, aligncont="center", gap = "25px" // flex exports
 
     let overflow; onMount(() => { if (x == true && y == false) { overflow.addEventListener('wheel',e=>{e.preventDefault();overflow.scrollBy({left: e.deltaY < 0 ? -30 : 30})})}})
 </script>

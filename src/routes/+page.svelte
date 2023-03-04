@@ -1,40 +1,58 @@
 <script>
-    import Image from "../lib/media/Image.svelte";
-    import * as icon from "../assets/icons/icons"
-    import Flex from "../lib/structure/Flex.svelte";
-    import Icon from "../lib/media/Icon.svelte";
-    import Button from "../lib/inputs/button/Button.svelte";
-    import ThemeSwitch from "../lib/inputs/button/ThemeSwitch.svelte";
+    import { Flex, Switch, Button } from "../lib/index"
     import Text from "../lib/structure/Text.svelte";
-    import Select from "../lib/inputs/option/Select.svelte";
-    import SelectItem from "../lib/inputs/option/SelectItem.svelte";
-    import Option from "../lib/inputs/option/Option.svelte";
+
+    let values = {
+        disabled: false,
+        transparent: false,
+        icon: false,
+        compact: false,
+        theme: false 
+    }
 </script>
 
-<!-- <Flex direction="row" gap="100px" align="center" justify="center" wrap style="margin: 50px">
-    <Flex align="flex-start">
-        <Text type="h1">
-            XL UI - лучший кит
-        </Text>
-        <Text type="h2">
-            Демонстрация компонентов
-        </Text>
+<Flex width="650px" height="100px" direction="row" justify="space-between" gap="0px">
+    <Flex width="100px" height="100px" direction="column">
+        <Switch bind:value={values.disabled}/>
+        disabled
     </Flex>
-    <ThemeSwitch transparent compact/>
+    <Flex width="100px" height="100px" direction="column">
+        <Switch bind:value={values.transparent}/>
+        transparent
+    </Flex>
+    <Flex width="100px" height="100px" direction="column">
+        <Switch bind:value={values.icon}/>
+        icon
+    </Flex>
+    <Flex width="100px" height="100px" direction="column">
+        <Switch bind:value={values.compact}/>
+        compact
+    </Flex>
+    <Flex width="100px" height="100px" direction="column">
+        <Switch bind:value={values.theme}/>
+        theme
+    </Flex>
+    <Flex width="50px" height="100px" direction="column"/>
+    <Flex width="100px" height="100px" direction="column">
+        {#if values.icon == true}
+            <Switch 
+                disabled={values.disabled}
+                transparent={values.transparent}
+                compact={values.compact}
+                theme={values.theme}
+                icon="edit_flash"
+                color="red"
+            />
+        {:else}
+            <Switch 
+                disabled={values.disabled}
+                transparent={values.transparent}
+                compact={values.compact}
+                theme={values.theme}
+                color="red"
+            />
+        {/if}
+
+        result
+    </Flex>
 </Flex>
-
-<Option>
-
-</Option> -->
-
-<Icon icon="animated_loader" size="30px" noinvert/>
-<Text type="h1">
-ААААААААААААААА
-</Text>
-<Button>
-    aksl;dka;sdkl;sa
-</Button>
-
-<ThemeSwitch/>
-
-

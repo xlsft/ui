@@ -3,8 +3,8 @@
     import Main from "$lib/structure/Main.svelte";
 </script>
 
-<Main theme="system">
-    <Flex justify="flex-start" align="center" width="100%" height="100%" gap="25px" y bar>
+<Main accent="sky">
+    <Flex width="100%" height="100%" y bar>
         <slot></slot>
     </Flex>
 </Main>

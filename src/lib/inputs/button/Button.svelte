@@ -1,13 +1,17 @@
 <script>
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher()
-    export let disabled = false, style = "", compact = "", transparent = "", color = "accent", width = "max-content", height = "max-content"
+    export let disabled = false, style = "", compact = false, transparent = false, color = "accent", width = "max-content", height = "max-content"
+
+    function click() {
+        if (disabled == false) dispatch('click')
+    }
 </script>
 
 
 <div 
     class={`xl-ui-button`} 
-    on:click={() => dispatch('click')} on:keypress={() => dispatch('click')} role="button"
+    on:click={click} on:keypress={click} role="button"
     style={`width: ${width}; height: ${height}; ${style || ''}`} 
     {disabled}
     compact={`${compact || false}`}
@@ -230,13 +234,11 @@
         background-color: var(--neutral-700);
         color: var(--neutral-300);
         cursor: not-allowed;
-        pointer-events: none;
     }
     .xl-ui-button[disabled="true"]:hover {
         background-color: var(--neutral-700);
         color: var(--neutral-300);
         cursor: not-allowed;
-        pointer-events: none;
     }
 
     /* ----------------transparent---------------- */
@@ -258,7 +260,6 @@
         border: 2px solid var(--theme-text-color);
         opacity: .3;
         cursor: not-allowed;
-        pointer-events: none;
     }
     .xl-ui-button[disabled="true"][transparent="true"]:hover {
         background-color: #ffffff00;
@@ -266,7 +267,6 @@
         border: 2px solid var(--theme-text-color);
         opacity: .3;
         cursor: not-allowed;
-        pointer-events: none;
     }
 
     /* -------------------------------------------*/
