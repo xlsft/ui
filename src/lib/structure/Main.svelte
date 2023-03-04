@@ -20,11 +20,12 @@
     }
 </script>
 
-<main class={`xl-ui`} theme={$color} accent={$accent}>
+<main class={`xl-ui`} theme={$color} accent={$accent} style="transition: background-color 0.7s ease-in-out;">
     <div class={`xl-ui-wrapper`} style={`
     height: ${$vh * 100}px;
     min-height: ${$vh * 100}px; 
     width: 100vw;
+    transition: background-color 0.7s ease-in-out;
     `}>
         <slot></slot>
     </div>
