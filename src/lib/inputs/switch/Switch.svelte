@@ -9,7 +9,7 @@
     theme = false
     import { tweened } from 'svelte/motion';
     import { cubicInOut } from 'svelte/easing';
-    let size = "14px"
+    
     let pos = tweened(5, {
 		duration: 400,
 		easing: cubicInOut
@@ -36,8 +36,8 @@
 
 
     if (theme == true) () => {
-            if ($currenttheme == "dark") { value = true; pos.set(p.end); posshadow.set(p.end); posshadow2.set(p.end); return }
-            if ($currenttheme == "light") { value = false; pos.set(p.start); posshadow.set(p.start); posshadow2.set(p.start); return }
+        if ($currenttheme == "dark") { value = true; pos.set(p.end); posshadow.set(p.end); posshadow2.set(p.end); return }
+        if ($currenttheme == "light") { value = false; pos.set(p.start); posshadow.set(p.start); posshadow2.set(p.start); return }
     }
 
     function change() {
@@ -52,15 +52,22 @@
             if (value == false) { value = true; pos.set(p.end); posshadow.set(p.end); posshadow2.set(p.end); return }
         }
     }
-    $: console.log('icon: ', icon)
-</script>
+    $: if ($pos == 0 || $posshadow == 0 || $posshadow2 == 0 && compact == true) {
+        p = { start: 5, end: 45 }
+        if (value == false) { pos.set(p.start); posshadow.set(p.start); posshadow2.set(p.start) } else {
+            pos.set(p.end); posshadow.set(p.end); posshadow2.set(p.end)
+        }
+    }
+    let size = "16px"
+    let currentinvertstate = false
 
-<!-- смена темы без иконки не отображает иконку вшитую -->
+    $: if (transparent == false) currentinvertstate = true; else currentinvertstate = false
+</script>
 
 <div 
     class={`xl-ui-switch`} 
     on:click={change} on:keypress={change} role="button"
-    {disabled}
+    disabled={disabled}
     color={color}
     transparent={transparent}
     compact={compact}
@@ -69,59 +76,34 @@
     themechanger={theme}
 >
     {#if compact == false}
-        <div class={`xl-ui-switch-knob-shadow`} style="left: {$posshadow}px;" transparent={transparent} compact={compact} themechanger={theme}/>
-        <div class={`xl-ui-switch-knob-shadow`} style="left: {$posshadow2}px;" transparent={transparent} compact={compact} themechanger={theme}/>
-        <div class={`xl-ui-switch-knob`} style="left: {$pos}px;" active={value} transparent={transparent} compact={compact} themechanger={theme}>
+        <div class={`xl-ui-switch-knob-shadow`} style="left: {$posshadow}px;" transparent={transparent} compact={compact} themechanger={theme} disabled={disabled}/>
+        <div class={`xl-ui-switch-knob-shadow`} style="left: {$posshadow2}px;" transparent={transparent} compact={compact} themechanger={theme} disabled={disabled}/>
+        <div class={`xl-ui-switch-knob`} style="left: {$pos}px;" active={value} transparent={transparent} compact={compact} themechanger={theme} disabled={disabled}>
             {#if icon || theme == true}
-                {#if theme == true}
-                    {#if transparent == false}
-                        {#if $currenttheme == "light"}
-                            <Icon icon="navigation_light" invert size={size} style="opacity: 0.5"/>
-                        {:else}
-                            <Icon icon="navigation_dark" invert size={size} style="opacity: 0.5"/>
-                        {/if}
+                {#if theme == true}    
+                    {#if $currenttheme == "light"}
+                        <Icon icon="navigation_light" invert={currentinvertstate} size={size} style="opacity: 0.8"/>
                     {:else}
-                        {#if $currenttheme == "light"}
-                            <Icon icon="navigation_light" size={size}/>
-                        {:else}
-                            <Icon icon="navigation_dark" size={size} style="opacity: 0.5"/>
-                        {/if}
+                        <Icon icon="navigation_dark" invert={currentinvertstate} size={size} style="opacity: 0.8"/>
                     {/if}
                 {:else}
-                    {#if transparent == false}
-                        <Icon icon={icon} invert size={size} style="opacity: 0.5"/>
-                    {:else}
-                        <Icon icon={icon} size={size}/>
-                    {/if}
+                    <Icon icon={icon} invert={currentinvertstate} size={size} style="opacity: 0.8"/>
                 {/if}
             {/if}
         </div>
     {:else}
-        {#if icon || theme == true}
-            {#if theme == true}
-                {#if transparent == false}
+            {#if icon || theme == true}
+                {#if theme == true}    
                     {#if $currenttheme == "light"}
-                        <Icon icon="navigation_light" invert size={size} style="opacity: 0.5"/>
+                        <Icon icon="navigation_light" invert={currentinvertstate} size={size} style="opacity: 0.8"/>
                     {:else}
-                        <Icon icon="navigation_dark" invert size={size} style="opacity: 0.5"/>
+                        <Icon icon="navigation_dark" invert={currentinvertstate} size={size} style="opacity: 0.8"/>
                     {/if}
                 {:else}
-                    {#if $currenttheme == "light"}
-                        <Icon icon="navigation_light" size={size}/>
-                    {:else}
-                        <Icon icon="navigation_dark" size={size} style="opacity: 0.5"/>
-                    {/if}
-                {/if}
-            {:else}
-                {#if transparent == false}
-                    <Icon icon={icon} invert size={size} style="opacity: 0.5"/>
-                {:else}
-                    <Icon icon={icon} size={size}/>
+                    <Icon icon={icon} invert={currentinvertstate} size={size} style="opacity: 0.8"/>
                 {/if}
             {/if}
-        {/if}
     {/if}
-
 </div>
 
 
@@ -372,6 +354,8 @@
         cursor: not-allowed;
     }
 
+
+
     .xl-ui-switch-knob[transparent="true"] {
         background-color: #ffffff00;
         border: 2px solid var(--theme-text-color);
@@ -380,7 +364,7 @@
         height: 28px;
     }
 
-    .xl-ui-switch-knob[transparent="true"][compact="false"]:hover {
+    .xl-ui-switch-knob[disabled="false"][transparent="true"][compact="false"]:hover {
         background-color: #ffffff00;
         border: 2px solid var(--theme-text-color);
         opacity: .3;

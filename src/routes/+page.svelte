@@ -7,7 +7,8 @@
         transparent: false,
         icon: false,
         compact: false,
-        theme: false 
+        theme: false,
+        result: false
     }
 </script>
 
@@ -40,8 +41,9 @@
                 transparent={values.transparent}
                 compact={values.compact}
                 theme={values.theme}
-                icon="edit_flash"
+                icon="auth_faceid"
                 color="red"
+                bind:value={values.result}
             />
         {:else}
             <Switch 
@@ -50,9 +52,9 @@
                 compact={values.compact}
                 theme={values.theme}
                 color="red"
+                bind:value={values.result}
             />
         {/if}
-
-        result
+        {values.result}
     </Flex>
 </Flex>
