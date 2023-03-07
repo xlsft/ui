@@ -1,11 +1,13 @@
 <script>
     import { createEventDispatcher } from "svelte";
+    import Icon from "../../media/Icon.svelte";
     const dispatch = createEventDispatcher()
     export let disabled = false, style = "", compact = false, transparent = false, color = "accent", width = "max-content", height = "max-content"
 
     function click() {
         if (disabled == false) dispatch('click')
     }
+
 </script>
 
 
@@ -17,7 +19,8 @@
     compact={`${compact || false}`}
     color={color}
     transparent={`${transparent || false}`}
->
+>   
+
     <slot/>
 </div>
 
