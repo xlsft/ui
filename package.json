@@ -1,9 +1,8 @@
 {
 	"name": "@xl-soft/xl-ui",
-	"version": "0.0.16",
+	"version": "0.0.17",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "svelte-kit sync && svelte-package"
+		"dev": "vite dev"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",

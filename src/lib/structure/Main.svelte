@@ -3,12 +3,13 @@
     import "../../assets/fonts/font-faces.css"
     export let theme = 'system', accent = "blue"
     import { theme as color, vh, accent as accolor } from "../stores";
-    color.set(theme)
-    accolor.set(accent)
+
     vh.set(window.innerHeight * 0.01)
     window.addEventListener('resize', function(event) {
         vh.set(window.innerHeight * 0.01)
     }, true);
+
+    if (localStorage.getItem('xl-ui-theme')) theme = localStorage.getItem('xl-ui-theme'); else localStorage.setItem('xl-ui-theme', theme)
 
     if (theme == "system") {
         const system = window.matchMedia("(prefers-color-scheme: dark)");
@@ -17,6 +18,9 @@
             if (e.matches) color.set('dark'); else color.set('light')
         })
     }
+
+    color.set(theme)
+    accolor.set(accent)
 </script>
 
 <main class={`xl-ui`} theme={$color} accent={$accolor} style="transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;">

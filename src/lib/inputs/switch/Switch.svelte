@@ -40,6 +40,14 @@
         if ($currenttheme == "light") { value = false; pos.set(p.start); posshadow.set(p.start); posshadow2.set(p.start); return }
     }
 
+    $: if (theme == true) {
+        if ($currenttheme == "dark") { 
+            value = true
+        } else { 
+            value = false
+        }
+    }
+
     function change() {
         if (disabled == false) {
             dispatch('input')
