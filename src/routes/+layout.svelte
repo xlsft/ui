@@ -3,7 +3,7 @@
     import Main from "$lib/structure/Main.svelte";
 </script>
 
-<Main accent="sky">
+<Main>
     <Flex width="100%" height="100%" direction="column" y bar>
         <slot></slot>
     </Flex>

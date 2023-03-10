@@ -2,12 +2,11 @@
     import { createEventDispatcher } from "svelte";
     import Icon from "../../media/Icon.svelte";
     const dispatch = createEventDispatcher()
-    export let disabled = false, style = "", compact = false, transparent = false, color = "accent", width = "max-content", height = "max-content"
+    export let disabled = false, style = "", compact = false, transparent = false, color = "accent", width = "max-content", height = "max-content", icon = ""
 
     function click() {
         if (disabled == false) dispatch('click')
     }
-
 </script>
 
 
@@ -20,7 +19,13 @@
     color={color}
     transparent={`${transparent || false}`}
 >   
-
+    {#if icon}
+        {#if transparent == true}
+            <Icon icon={icon}/>
+        {:else}
+            <Icon icon={icon} noinvert/>
+        {/if}
+    {/if}
     <slot/>
 </div>
 

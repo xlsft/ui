@@ -10,6 +10,9 @@
     }, true);
 
     if (localStorage.getItem('xl-ui-theme')) theme = localStorage.getItem('xl-ui-theme'); else localStorage.setItem('xl-ui-theme', theme)
+    $: console.log(theme)
+    color.set(theme)
+    accolor.set(accent)
 
     if (theme == "system") {
         const system = window.matchMedia("(prefers-color-scheme: dark)");
@@ -19,8 +22,7 @@
         })
     }
 
-    color.set(theme)
-    accolor.set(accent)
+
 </script>
 
 <main class={`xl-ui`} theme={$color} accent={$accolor} style="transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;">
