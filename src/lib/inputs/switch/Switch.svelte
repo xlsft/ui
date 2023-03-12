@@ -75,10 +75,10 @@
 <div 
     class={`xl-ui-switch`} 
     on:click={change} on:keypress={change} role="button"
-    disabled={disabled}
-    color={color}
-    transparent={transparent}
-    compact={compact}
+    {disabled}
+    {color}
+    {transparent}
+    {compact}
     active={value}
     theme={$currenttheme}
     themechanger={theme}

@@ -7,9 +7,9 @@
     import * as IconsList from "../assets/icons/icons" // Modified Streamline HQ Core Line Icons
 
     //* STRUCTURE
-    import Main from "./structure/Main.svelte" // Main wrapper for UI kit. Contains colors, fonts, and basic UI features like 100vh fix
-    import Flex from "./structure/Flex.svelte" // Default, fully-customizable flex box for any component. Supports overflow and overflow with horizontal scroll feature
-    import Text from "./structure/Text.svelte" // Styles for multiple text elements, like: h1, h2, h3, div and others
+    import Main from "./layout/Main.svelte" // Main wrapper for UI kit. Contains colors, fonts, and basic UI features like 100vh fix
+    import Flex from "./layout/Flex.svelte" // Default, fully-customizable flex box for any component. Supports overflow and overflow with horizontal scroll feature
+    import Text from "./layout/Text.svelte" // Styles for multiple text elements, like: h1, h2, h3, div and others
 
     //* MEDIA
     import Image from "./media/Image.svelte" // Image content

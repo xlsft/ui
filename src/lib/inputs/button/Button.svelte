@@ -15,8 +15,8 @@
     on:click={click} on:keypress={click} role="button"
     style={`width: ${width}; height: ${height}; ${style || ''}`} 
     {disabled}
-    compact={`${compact || false}`}
-    color={color}
+    {compact}
+    {color}
     transparent={`${transparent || false}`}
 >   
     {#if icon}

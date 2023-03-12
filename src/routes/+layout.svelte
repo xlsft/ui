@@ -1,9 +1,8 @@
 <script>
-    import Flex from "$lib/structure/Flex.svelte";
-    import Main from "$lib/structure/Main.svelte";
+    import { Flex, Main } from "../lib/index"
 </script>
 
-<Main>
+<Main accent="sky">
     <Flex width="100%" height="100%" direction="column" y bar>
         <slot></slot>
     </Flex>

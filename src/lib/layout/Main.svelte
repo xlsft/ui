@@ -1,43 +1,59 @@
 <script>
     // @ts-nocheck
-    import "../../assets/fonts/font-faces.css"
-    export let theme = 'system', accent = "blue"
+    import "../../assets/fonts/font-faces.css";
+    export let theme = "system",
+        accent = "blue";
     import { theme as color, vh, accent as accolor } from "../stores";
 
-    vh.set(window.innerHeight * 0.01)
-    window.addEventListener('resize', function(event) {
-        vh.set(window.innerHeight * 0.01)
-    }, true);
+    vh.set(window.innerHeight * 0.01);
+    window.addEventListener(
+        "resize",
+        function (event) {
+            vh.set(window.innerHeight * 0.01);
+        },
+        true
+    );
 
-    if (localStorage.getItem('xl-ui-theme')) theme = localStorage.getItem('xl-ui-theme'); else localStorage.setItem('xl-ui-theme', theme)
-    $: console.log(theme)
-    color.set(theme)
-    accolor.set(accent)
+    if (localStorage.getItem("xl-ui-theme"))
+        theme = localStorage.getItem("xl-ui-theme");
+    else localStorage.setItem("xl-ui-theme", theme);
+    $: console.log(theme);
+    color.set(theme);
+    accolor.set(accent);
 
     if (theme == "system") {
         const system = window.matchMedia("(prefers-color-scheme: dark)");
-        if (system.matches) color.set('dark'); else color.set('light')
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (e.matches) color.set('dark'); else color.set('light')
-        })
+        if (system.matches) color.set("dark");
+        else color.set("light");
+        window
+            .matchMedia("(prefers-color-scheme: dark)")
+            .addEventListener("change", (e) => {
+                if (e.matches) color.set("dark");
+                else color.set("light");
+            });
     }
-
-
 </script>
 
-<main class={`xl-ui`} theme={$color} accent={$accolor} style="transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;">
-    <div class={`xl-ui-wrapper`} style={`
+<main
+    class={`xl-ui`}
+    theme={$color}
+    accent={$accolor}
+    style="transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;"
+>
+    <div
+        class={`xl-ui-wrapper`}
+        style={`
     height: ${$vh * 100}px;
     min-height: ${$vh * 100}px; 
     width: 100vw;
     transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;;
-    `}>
-        <slot/>
+    `}
+    >
+        <slot />
     </div>
 </main>
 
 <style>
-
     :global(:root) {
         --neutral-1000: #000000;
         --neutral-900: #1a1a1a;
@@ -123,23 +139,23 @@
         --pink-700: #e467e4;
         --pink-600: #e87de8;
     }
-    
+
     :global(::-webkit-scrollbar) {
         width: 5px;
         height: 5px;
     }
-    
+
     :global(::-webkit-scrollbar-track) {
         border-radius: 10px;
     }
-    
+
     :global(::-webkit-scrollbar-thumb) {
-        background:rgba(255, 255, 255, 0.5); 
+        background: rgba(255, 255, 255, 0.5);
         border-radius: 10px;
     }
-    
+
     :global(::-webkit-scrollbar-thumb:hover) {
-        background:rgba(255, 255, 255, 0.7); 
+        background: rgba(255, 255, 255, 0.7);
     }
 
     :global(::selection) {
@@ -151,7 +167,7 @@
         margin: 0;
         user-select: none;
         flex-shrink: 0;
-        transition: .4s cubic-bezier(0,0,0,1) 0s;
+        transition: 0.4s cubic-bezier(0, 0, 0, 1) 0s;
         font-family: "Rubik";
     }
 
@@ -173,12 +189,10 @@
 
         color: var(--theme-text-color);
         background-color: var(--theme-bg-color-1000);
-        transition: .4s ease-in-out;
+        transition: 0.4s ease-in-out;
     }
 
     /* -------------------------------------------*/
-
-
 
     /* ----------------light theme---------------- */
 
@@ -197,15 +211,13 @@
         --theme-bg-color-0: var(--sky-0);
         color: var(--theme-text-color);
         background-color: var(--theme-bg-color-1000);
-        transition: .4s ease-in-out;
+        transition: 0.4s ease-in-out;
     }
 
     /* -------------------------------------------*/
-    
 
-    
     /* ----------------red theme---------------- */
-    
+
     :global(.xl-ui[accent="red"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--red-1000);
@@ -225,10 +237,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------orange theme---------------- */
-    
+
     :global(.xl-ui[accent="orange"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--orange-1000);
@@ -248,10 +258,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------lime theme---------------- */
-    
+
     :global(.xl-ui[accent="lime"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--lime-1000);
@@ -271,10 +279,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------green theme---------------- */
-    
+
     :global(.xl-ui[accent="green"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-1000);
         --theme-accent-color-1000: var(--green-1000);
@@ -294,10 +300,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------cyan theme---------------- */
-    
+
     :global(.xl-ui[accent="cyan"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-1000);
         --theme-accent-color-1000: var(--cyan-1000);
@@ -317,10 +321,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------blue theme---------------- */
-    
+
     :global(.xl-ui[accent="blue"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--blue-1000);
@@ -340,10 +342,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------royal theme---------------- */
-    
+
     :global(.xl-ui[accent="royal"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--royal-1000);
@@ -363,10 +363,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------violet theme---------------- */
-    
+
     :global(.xl-ui[accent="violet"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--violet-1000);
@@ -386,10 +384,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------purple theme---------------- */
-    
+
     :global(.xl-ui[accent="purple"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--purple-1000);
@@ -409,10 +405,8 @@
 
     /* -------------------------------------------*/
 
-
-    
     /* ----------------pink theme---------------- */
-    
+
     :global(.xl-ui[accent="pink"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--pink-1000);
@@ -432,10 +426,8 @@
 
     /* -------------------------------------------*/
 
-
-        
     /* ----------------sky theme---------------- */
-    
+
     :global(.xl-ui[accent="sky"][theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--sky-600);
@@ -454,7 +446,6 @@
     }
 
     /* -------------------------------------------*/
-
 
     :global(body) {
         margin: 0;
