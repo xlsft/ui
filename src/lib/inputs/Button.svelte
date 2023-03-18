@@ -57,6 +57,17 @@
     .xl-ui-button:hover {
         transition: .4s ease-in-out;
     }
+    /* ----------------neutral---------------- */
+    
+    .xl-ui-button[color="neutral"] {
+        color: var(--neutral-1000);
+        background-color: var(--neutral-200);
+    }
+    .xl-ui-button[color="neutral"]:hover {
+        background-color: var(--neutral-300);
+    }
+    
+    /* -------------------------------------------*/
 
     /* ----------------accent---------------- */
     

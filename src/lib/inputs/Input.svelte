@@ -123,7 +123,7 @@
         background-color: var(--neutral-200);
     }
     input[color="neutral"]:hover {
-        background-color: var(--cobalt-700);
+        background-color: var(--neutral-300);
     }
     
     /* -------------------------------------------*/
