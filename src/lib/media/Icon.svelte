@@ -221,7 +221,7 @@
          * shape_triangle
          *
          */
-        icon;
+        icon = "", hover = false
     import { theme } from "../stores";
     // ------------------ANIMATED------------------
 
@@ -565,6 +565,9 @@
 
     // TRIANGLE.SVG EXPORT
     import shape_triangle from "../../assets/icons/shape/triangle.svg";
+
+    import { createEventDispatcher } from "svelte";
+    const dispatch = createEventDispatcher()
 </script>
 
 <img
@@ -581,9 +584,15 @@
     {invert}
     importance="high"
     decoding="async"
+    on:click={() => dispatch('click')}
+    on:keypress={() => dispatch('click')}
+    {hover}
 />
 
 <style>
+    .xl-ui-icon[hover="true"]:hover {
+        opacity: .5;
+    }
     .xl-ui-icon[theme="dark"] {
         filter: invert(0%);
     }

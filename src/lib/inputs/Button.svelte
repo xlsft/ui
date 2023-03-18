@@ -1,6 +1,6 @@
 <script>
+    import Icon from "../media/Icon.svelte";
     import { createEventDispatcher } from "svelte";
-    import Icon from "../../media/Icon.svelte";
     const dispatch = createEventDispatcher()
     export let disabled = false, style = "", compact = false, transparent = false, color = "accent", width = "max-content", height = "max-content", icon = ""
 
@@ -13,7 +13,7 @@
 <div 
     class={`xl-ui-button`} 
     on:click={click} on:keypress={click} role="button"
-    style={`width: ${width}; height: ${height}; ${style || ''}`} 
+    style={`width: ${width}; height: ${height}; ${style}`} 
     {disabled}
     {compact}
     {color}
@@ -76,7 +76,7 @@
     
     .xl-ui-button[color="cobalt"] {
         color: var(--neutral-0);
-        background-color: var(--cobalt-1000);
+        background-color: var(--cobalt-900);
     }
     .xl-ui-button[color="cobalt"]:hover {
         background-color: var(--cobalt-700);

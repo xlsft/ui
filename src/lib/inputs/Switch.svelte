@@ -1,7 +1,7 @@
 <script>
-    import { theme as currenttheme } from "../../stores";
+    import { theme as currenttheme } from "../stores";
     import { createEventDispatcher } from "svelte";
-    import Icon from "../../media/Icon.svelte";
+    import Icon from "../media/Icon.svelte";
     const dispatch = createEventDispatcher()
     export let 
     disabled = false, value = false,
@@ -173,7 +173,7 @@
     /* ----------------cobalt---------------- */
     
     .xl-ui-switch[color="cobalt"] {
-        background-color: var(--cobalt-1000);
+        background-color: var(--cobalt-900);
     }
     .xl-ui-switch[color="cobalt"]:hover {
         background-color: var(--cobalt-700);

@@ -16,8 +16,9 @@
     import Icon from "./media/Icon.svelte" // Icon content with included modified Streamline HQ Core Line Icons
 
     //* INPUTS
-    import Button from "./inputs/button/Button.svelte" // Button
-    import Switch from "./inputs/switch/Switch.svelte" // Switch
+    import Button from "./inputs/Button.svelte" // Button
+    import Switch from "./inputs/Switch.svelte" // Switch
+    import Input from "./inputs/Input.svelte" // Input
 
 
 // EXPORTS
@@ -36,5 +37,5 @@
         Image, Icon,
 
         //* INPUTS
-        Button, Switch
+        Button, Switch, Input
     }

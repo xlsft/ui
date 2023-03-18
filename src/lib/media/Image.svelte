@@ -1,4 +1,6 @@
 <script>
+    import { createEventDispatcher } from "svelte";
+    const dispatch = createEventDispatcher()
     export let src = "", alt = "", style = "",
     height = "", width = "",
     fill = false, lazy = false,
@@ -21,6 +23,8 @@
     {fill}
     decoding="async"
     {crossorigin}
+    on:click={() => dispatch('click')}
+    on:keypress={() => dispatch('click')}
 />
 
 <style>
