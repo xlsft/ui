@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+    //@ts-nocheck
     export let style = "",
         size = "20px",
         noinvert = false,
@@ -566,7 +567,7 @@
     // TRIANGLE.SVG EXPORT
     import shape_triangle from "../../assets/icons/shape/triangle.svg";
 
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     const dispatch = createEventDispatcher()
 </script>
 
@@ -584,6 +585,7 @@
     {invert}
     importance="high"
     decoding="async"
+    loading="lazy"
     on:click={() => dispatch('click')}
     on:keypress={() => dispatch('click')}
     {hover}

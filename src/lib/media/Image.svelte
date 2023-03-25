@@ -1,4 +1,4 @@
-<script>
+<script >
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher()
     export let src = "", alt = "", style = "",
