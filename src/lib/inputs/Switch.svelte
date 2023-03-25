@@ -1,153 +1,98 @@
-<script>
-    import { theme as currenttheme } from "../stores";
+<script lang="ts">
+    import Icon from "$lib/media/Icon.svelte";
+
+    // events
     import { createEventDispatcher } from "svelte";
-    import Icon from "../media/Icon.svelte";
-    const dispatch = createEventDispatcher()
-    export let 
-    disabled = false, value = false,
-    transparent = false, color = "accent", icon = "", compact = false,
-    theme = false
-    import { tweened } from 'svelte/motion';
-    import { cubicInOut } from 'svelte/easing';
-    
-    let pos = tweened(5, {
-		duration: 400,
-		easing: cubicInOut
-	})
-    let posshadow = tweened(5, {
-		duration: 455,
-		easing: cubicInOut
-	})
-    let posshadow2 = tweened(5, {
-		duration: 510,
-		easing: cubicInOut
-	})
+    const dispatch = createEventDispatcher();
 
-    let p = {
-        start: 5,
-        end: 45
+    // value
+    export let value: boolean = false
+
+    // disabled
+    export let disabled: boolean = false
+
+    // color
+    import { getColor } from "$lib/assets/scripts/colors";
+    import type { Colors, Depths } from "$lib/assets/scripts/colors";
+    export let color: Colors = "accent"
+    export let edepth: Depths = 1000
+    export let hdepth: Depths = 700
+    let ecolor = getColor(edepth, color)
+    let hcolor = getColor(hdepth, color)
+    export let vcolor: Colors = color
+    export let vedepth: Depths = 1000
+    export let vhdepth: Depths = 700
+    let vecolor = getColor(vedepth, vcolor)
+    let vhcolor = getColor(vhdepth, vcolor)
+    let c: string = ecolor
+
+    let hover = () => { disabled == false ? value == false ? c = hcolor : c = vhcolor : c = c } 
+    let leave = () => { disabled == false ? value == false ? c = ecolor : c = vecolor : c = c }
+
+    // theme
+    import { theme as ctheme } from "../stores";
+    export let theme: boolean = false
+    $: if (theme == true) ctheme.subscribe((v) => v == 'light' ?  value = true : value = false)
+    type ThemeIcon = "navigation_light" | "navigation_dark" | ""
+    let ticon: ThemeIcon; 
+    $: theme == true ? $ctheme == 'light' ? ticon = 'navigation_light' : ticon = 'navigation_dark' : ticon = ''
+
+    // animation 
+    import { tweened } from "svelte/motion";
+    import { cubicInOut } from "svelte/easing";
+    let anim = (dur: number) => { return tweened(5, { duration: dur, easing: cubicInOut }) }
+    let pos = { start: 5, end: 45 }
+    let k = anim(400), s1 = anim(455), s2 = anim(510)
+
+    // swithcing
+    $: if (value == true) { k.set(pos.end); s1.set(pos.end); s2.set(pos.end) } else
+    { k.set(pos.start); s1.set(pos.start); s2.set(pos.start) }
+    const click = () => {
+        if (disabled == true) return
+        dispatch('')
+        if (value == true) value = false; else value = true
+        if (theme == true) { if ($ctheme == 'light') ctheme.set('dark'); else ctheme.set('light') }
     }
 
-    if (compact == true) p = { start: 0, end: 0 }
+    // icon
+    import type { IconsName } from "$lib/assets/scripts/icons";
+    export let icon: IconsName = ""
 
-    if (value == true) pos.set(p.end); else pos.set(p.start)
-    if (value == true) posshadow.set(p.end); else posshadow.set(p.start)
-    if (value == true) posshadow2.set(p.end); else posshadow2.set(p.start)
-
-
-    if (theme == true) () => {
-        if ($currenttheme == "dark") { value = true; pos.set(p.end); posshadow.set(p.end); posshadow2.set(p.end); return }
-        if ($currenttheme == "light") { value = false; pos.set(p.start); posshadow.set(p.start); posshadow2.set(p.start); return }
-    }
-
-    $: if (theme == true) {
-        if ($currenttheme == "dark") { 
-            value = true
-        } else { 
-            value = false
-        }
-    }
-
-    function change() {
-        if (disabled == false) {
-            dispatch('input')
-            if (theme == true) {
-                if ($currenttheme == "dark") { value = true; pos.set(p.end); posshadow.set(p.end); posshadow2.set(p.end); currenttheme.set('light'); return }
-                if ($currenttheme == "light") { value = false; pos.set(p.start); posshadow.set(p.start); posshadow2.set(p.start); currenttheme.set('dark'); return }
-            }
-
-            if (value == true) { value = false; pos.set(p.start); posshadow.set(p.start); posshadow2.set(p.start); return }
-            if (value == false) { value = true; pos.set(p.end); posshadow.set(p.end); posshadow2.set(p.end); return }
-        }
-    }
-    $: if ($pos == 0 || $posshadow == 0 || $posshadow2 == 0 && compact == true) {
-        p = { start: 5, end: 45 }
-        if (value == false) { pos.set(p.start); posshadow.set(p.start); posshadow2.set(p.start) } else {
-            pos.set(p.end); posshadow.set(p.end); posshadow2.set(p.end)
-        }
-    }
-    let size = "16px"
-    let currentinvertstate = false
-
-    $: if (transparent == false) currentinvertstate = true; else currentinvertstate = false
 </script>
 
-<div 
-    class={`xl-ui-switch`} 
-    on:click={change} on:keypress={change} role="button"
-    {disabled}
-    {color}
-    {transparent}
-    {compact}
-    active={value}
-    theme={$currenttheme}
-    themechanger={theme}
+<div
+    class={`xl-ui-switch`}
+    on:click={click}
+    on:keypress={click}
+    on:mouseenter={hover}
+    on:mouseleave={leave}
+    role="button"
+    style="background: {c};"
+    aria-disabled="{disabled}"
 >
-    {#if compact == false}
-        <div class={`xl-ui-switch-knob-shadow`} style="left: {$posshadow}px;" transparent={transparent} compact={compact} themechanger={theme} disabled={disabled}/>
-        <div class={`xl-ui-switch-knob-shadow`} style="left: {$posshadow2}px;" transparent={transparent} compact={compact} themechanger={theme} disabled={disabled}/>
-        <div class={`xl-ui-switch-knob`} style="left: {$pos}px;" active={value} transparent={transparent} compact={compact} themechanger={theme} disabled={disabled}>
-            {#if icon || theme == true}
-                {#if theme == true}    
-                    {#if $currenttheme == "light"}
-                        <Icon icon="navigation_light" invert={currentinvertstate} size={size} style="opacity: 0.8"/>
-                    {:else}
-                        <Icon icon="navigation_dark" invert={currentinvertstate} size={size} style="opacity: 0.8"/>
-                    {/if}
-                {:else}
-                    <Icon icon={icon} invert={currentinvertstate} size={size} style="opacity: 0.8"/>
-                {/if}
-            {/if}
+        <div
+            class="xl-ui-switch-knob"
+            style="left: {$s2}px;"
+            data-active={value}
+            aria-disabled="{disabled}"
+        />
+        <div
+            class="xl-ui-switch-knob"
+            style="left: {$s1}px;"
+            data-active={value}
+            aria-disabled="{disabled}"
+        />
+        <div
+            class="xl-ui-switch-knob xl-ui-switch-knob-top"
+            style="left: {$k}px;"
+            data-active={value}
+            aria-disabled="{disabled}"
+        >
+        <Icon name="{theme == false && icon != "" ? icon : ticon}" size="16px" color="dark" style="opacity: .5"/>
         </div>
-    {:else}
-            {#if icon || theme == true}
-                {#if theme == true}    
-                    {#if $currenttheme == "light"}
-                        <Icon icon="navigation_light" invert={currentinvertstate} size={size} style="opacity: 0.8"/>
-                    {:else}
-                        <Icon icon="navigation_dark" invert={currentinvertstate} size={size} style="opacity: 0.8"/>
-                    {/if}
-                {:else}
-                    <Icon icon={icon} invert={currentinvertstate} size={size} style="opacity: 0.8"/>
-                {/if}
-            {/if}
-    {/if}
 </div>
 
-
-
 <style>
-    .xl-ui-switch-knob[active="false"] {
-        transform: rotate(0deg);
-    }
-
-    .xl-ui-switch-knob[active="true"] {
-        transform: rotate(360deg);
-    }
-
-    .xl-ui-switch-knob {
-        height: 30px;
-        border-radius: 50%;
-        aspect-ratio: 1 / 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--neutral-0);
-        position: absolute;
-        top: 5px;
-        cursor: pointer;
-    }
-
-    .xl-ui-switch-knob-shadow {
-        height: 30px;
-        border-radius: 50%;
-        aspect-ratio: 1 / 1;
-        background-color: var(--neutral-0);
-        position: absolute;
-        top: 5px;
-        cursor: pointer;
-    }
-
     .xl-ui-switch {
         height: 40px;
         width: 80px;
@@ -156,292 +101,32 @@
         cursor: pointer;
     }
 
-
-    /* ----------------accent---------------- */
-    
-    .xl-ui-switch[color="accent"] {
-        background-color: var(--theme-accent-color-1000);
-    }
-    .xl-ui-switch[color="accent"]:hover {
-        background-color: var(--theme-accent-color-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------cobalt---------------- */
-    
-    .xl-ui-switch[color="cobalt"] {
-        background-color: var(--cobalt-900);
-    }
-    .xl-ui-switch[color="cobalt"]:hover {
-        background-color: var(--cobalt-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------sky---------------- */
-    
-    .xl-ui-switch[color="sky"] {
-        background-color: var(--sky-1000);
-    }
-    .xl-ui-switch[color="sky"]:hover {
-        background-color: var(--sky-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------red---------------- */
-    
-    .xl-ui-switch[color="red"] {
-        background-color: var(--red-1000);
-    }
-    .xl-ui-switch[color="red"]:hover {
-        background-color: var(--red-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------orange---------------- */
-    
-    .xl-ui-switch[color="orange"] {
-        background-color: var(--orange-1000);
-    }
-    .xl-ui-switch[color="orange"]:hover {
-        background-color: var(--orange-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------lime---------------- */
-    
-    .xl-ui-switch[color="lime"] {
-        background-color: var(--lime-1000);
-    }
-    .xl-ui-switch[color="lime"]:hover {
-        background-color: var(--lime-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------green---------------- */
-    
-    .xl-ui-switch[color="green"] {
-        background-color: var(--green-1000);
-    }
-    .xl-ui-switch[color="green"]:hover {
-        background-color: var(--green-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------cyan---------------- */
-    
-    .xl-ui-switch[color="cyan"] {
-        background-color: var(--cyan-1000);
-    }
-    .xl-ui-switch[color="cyan"]:hover {
-        background-color: var(--cyan-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------blue---------------- */
-    
-    .xl-ui-switch[color="blue"] {
-        background-color: var(--blue-1000);
-    }
-    .xl-ui-switch[color="blue"]:hover {
-        background-color: var(--blue-700);
-    }
-
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------royal---------------- */
-    
-    .xl-ui-switch[color="royal"] {
-        background-color: var(--royal-1000);
-    }
-    .xl-ui-switch[color="royal"]:hover {
-        background-color: var(--royal-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------violet---------------- */
-
-    .xl-ui-switch[color="violet"] {
-        background-color: var(--violet-1000);
-    }
-    .xl-ui-switch[color="violet"]:hover {
-        background-color: var(--violet-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------purple---------------- */
-    
-    .xl-ui-switch[color="purple"] {
-        background-color: var(--purple-1000);
-    }
-    .xl-ui-switch[color="purple"]:hover {
-        background-color: var(--purple-700);
-    }
-
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------pink---------------- */
-
-    .xl-ui-switch[color="pink"] {
-        background-color: var(--pink-1000);
-    }
-    .xl-ui-switch[color="pink"]:hover {
-        background-color: var(--pink-700);
-    }
-
-    /* -------------------------------------------*/
-
-    .xl-ui-switch[disabled="true"] {
-        background-color: var(--neutral-700);
-        cursor: not-allowed;
-    }
-
-    .xl-ui-switch-knob[disabled="true"] {
-        cursor: not-allowed;
-    }
-
-    .xl-ui-switch[disabled="true"]:hover {
-        background-color: var(--neutral-700);
-        cursor: not-allowed;
-    }
-
-    /* ----------------transparent---------------- */
-
-    .xl-ui-switch[transparent="true"] {
-        background-color: #ffffff00;
-        border: 2px solid var(--theme-text-color);
-    }
-    .xl-ui-switch[transparent="true"]:hover {
-        background-color: #ffffff00;
-        border: 2px solid var(--theme-text-color);
-        opacity: .5;
-    }
-    .xl-ui-switch[disabled="true"][transparent="true"] {
-        background-color: #ffffff00;
-        border: 2px solid var(--theme-text-color);
-        opacity: .3;
-        cursor: not-allowed;
-    }
-    .xl-ui-switch[disabled="true"][transparent="true"]:hover {
-        background-color: #ffffff00;
-        border: 2px solid var(--theme-text-color);
-        opacity: .3;
-        cursor: not-allowed;
-    }
-
-
-
-    .xl-ui-switch-knob[transparent="true"] {
-        background-color: #ffffff00;
-        border: 2px solid var(--theme-text-color);
-        top: 4px;
-        width: 28px;
-        height: 28px;
-    }
-
-    .xl-ui-switch-knob[disabled="false"][transparent="true"][compact="false"]:hover {
-        background-color: #ffffff00;
-        border: 2px solid var(--theme-text-color);
-        opacity: .3;
-    }
-
-    .xl-ui-switch-knob-shadow[transparent="true"][compact="false"] {
-        display: none;
-    }
-
-    /* -------------------------------------------*/
-
-    .xl-ui-switch[compact="true"] {
+    .xl-ui-switch-knob {
         height: 30px;
         width: 30px;
+        border-radius: 50%;
+        background-color: var(--neutral-0);
+        position: absolute;
+        top: 5px;
+        cursor: pointer;
+    }
+
+    .xl-ui-switch-knob-top {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: var(--neutral-0);
     }
 
-    .xl-ui-switch[compact="true"]:hover {
-        background-color: var(--neutral-0);
+    .xl-ui-switch-knob[data-active="false"] {
+        transform: rotate(0deg);
+    }
+
+    .xl-ui-switch-knob[data-active="true"] {
+        transform: rotate(360deg);
+    }
+
+    *[aria-disabled="true"]:hover, *[aria-disabled="true"] {
         opacity: .5;
-        
-    }
-
-    .xl-ui-switch[compact="true"][active="true"] {
-        background-color: var(--green-1000);
-    }
-
-    .xl-ui-switch[compact="true"][theme="light"] {
-        border: 2px solid var(--theme-text-color);
-    }
-
-    .xl-ui-switch[compact="true"][theme="light"][themechanger="true"] {
-        background-color: var(--orange-1000);
-        border: 2px solid var(--theme-text-color);
-    }
-
-    .xl-ui-switch[compact="true"][transparent="true"] {
-        background-color: #ffffff00;
-    }
-
-    .xl-ui-switch[compact="true"][theme="light"][themechanger="true"][transparent="true"] {
-        background-color: var(--orange-1000);
-        border: 2px solid var(--theme-text-color);
-    }
-
-    .xl-ui-switch[compact="true"][active="true"][transparent="true"] {
-        background-color: var(--green-1000);
-        border: 2px solid var(--theme-text-color);
-    }
-
-    .xl-ui-switch[compact="true"][disabled="true"] {
-        opacity: .3;
-    }
-
-    .xl-ui-switch-knob[active="true"][transparent="true"] {
-        background-color: var(--green-1000);
-        border: 2px solid var(--theme-text-color);
-    }
-
-    .xl-ui-switch-knob[active="true"][transparent="true"]:hover {
-        background-color: var(--green-1000);
-        border: 2px solid var(--theme-text-color);
-    }
-
-    .xl-ui-switch-knob[active="true"][themechanger="true"][transparent="true"] {
-        background-color: var(--orange-1000);
-        border: 2px solid var(--theme-text-color);
+        cursor: not-allowed;
     }
 </style>

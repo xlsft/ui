@@ -1,10 +1,19 @@
-<script >
+<script lang="ts">
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher()
-    export let src = "", alt = "", style = "",
-    height = "", width = "",
-    fill = false, lazy = false,
-    crossorigin = "anonymous"
+
+    type Crossorigin = "" | "anonymous" | "use-credentials" | null | undefined
+
+    // properties
+    export let src = ""
+    export let alt = ""
+    export let style = ""
+    export let height = ""
+    export let width = ""
+    export let fill = false
+    export let lazy = false
+    export let crossorigin: Crossorigin = "anonymous"
+
 </script>
 
 <img
@@ -19,19 +28,19 @@
         width: ${width}; 
         ${style}
     `}
-    loading={lazy == true ? "" : "lazy"}
-    {fill}
+    loading={lazy == true ? "eager" : "lazy"}
+    data-fill={fill}
     decoding="async"
-    {crossorigin}
+    crossorigin="{crossorigin}"
     on:click={() => dispatch('click')}
     on:keypress={() => dispatch('click')}
 />
 
 <style>
-    img[fill="true"] {
+    img[data-fill="true"] {
         background-size: cover;
     }
-    img[fill="false"] {
+    img[data-fill="false"] {
         background-size: contain;
     }
 </style>

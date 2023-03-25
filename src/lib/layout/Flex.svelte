@@ -1,23 +1,50 @@
-<script>
+<script lang="ts">
     import { onMount } from "svelte";
 
-    export let style = "",
-        width = "",
-        height = ""; // global exports
-    export let x = false,
-        y = false,
-        bar = false; // overflow exports
-    export let direction = "row",
-        justify = "center",
-        align = "center",
-        wrap = false,
-        aligncont = "center",
-        gap = "25px"; // flex exports
+    // flex types
+    type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
+    type FlexWrap = "nowrap" | "wrap" | "wrap-reverse";
+    type JustifyContent =
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+    type AlignItems = "flex-start" | "flex-end" | "center" | "baseline" | "stretch";
+    type AlignContent =
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "stretch";
 
-    let overflow;
+
+    // global exports
+    export let style: string = "",
+        width: string = "",
+        height: string = ""; 
+        
+    // overflow exports
+    export let x: boolean = false,
+        y: boolean = false,
+        bar: boolean = false;
+
+    // flex exports
+    export let direction: FlexDirection = "row",
+        justify: JustifyContent = "center",
+        align: AlignItems = "center",
+        wrap: FlexWrap = "nowrap",
+        aligncont: AlignContent = "center",
+        gap: string = "25px"; // flex exports
+
+
+    let overflow: HTMLElement;
+
     onMount(() => {
-        if (x == true && y == false) {
-            overflow.addEventListener("wheel", (e) => {
+        if (x == true && y == false && overflow) {
+            overflow.addEventListener("wheel", (e: WheelEvent) => {
                 e.preventDefault();
                 overflow.scrollBy({ left: e.deltaY < 0 ? -30 : 30 });
             });
@@ -27,10 +54,9 @@
 
 <div
     class={`xl-ui-flex`}
-    {wrap}
-    {x}
-    {y}
-    {bar}
+    data-x-overflow={x}
+    data-y-overflow={y}
+    data-bar-overflow={bar}
     bind:this={overflow}
     style={`
         height: ${height};
@@ -40,6 +66,7 @@
         justify-content: ${justify};
         align-items: ${align};
         align-content: ${aligncont};
+        flex-wrap: ${wrap}
         gap: ${gap};
         ${style};
     `}
@@ -51,23 +78,17 @@
     div {
         overflow: hidden;
     }
-    div[x="true"] {
+    div[data-x-overflow="true"] {
         overflow-x: scroll;
     }
-    div[y="true"] {
+    div[data-y-overflow="true"] {
         overflow-y: scroll;
     }
-    div[bar="false"] {
+    div[data-bar-overflow="false"] {
         scrollbar-width: none;
         -ms-overflow-style: none;
     }
-    div::-webkit-scrollbar[bar="false"] {
+    div::-webkit-scrollbar[data-bar-overflow="false"] {
         display: none;
-    }
-    div[wrap="true"] {
-        flex-wrap: wrap;
-    }
-    div[wrap="false"] {
-        flex-wrap: nowrap;
     }
 </style>

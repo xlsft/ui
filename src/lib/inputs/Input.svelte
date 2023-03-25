@@ -27,7 +27,6 @@
             return
         }
     }
-    $: console.log(type)
 </script>
 
 <div class={`xl-ui-input`} style="">

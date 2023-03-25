@@ -1,25 +1,21 @@
-<script>
-    // @ts-nocheck
-    import "../assets/fonts/font-faces.css";
-    export let theme = "system",
-        accent = "blue";
+<script lang="ts">
     import { theme as color, vh, accent as accolor } from "../stores";
 
-    vh.set(window.innerHeight * 0.01);
-    window.addEventListener(
-        "resize",
-        function (event) {
-            vh.set(window.innerHeight * 0.01);
-        },
-        true
-    );
-
-    if (localStorage.getItem("xl-ui-theme"))
-        theme = localStorage.getItem("xl-ui-theme");
-    else localStorage.setItem("xl-ui-theme", theme);
-    $: console.log(theme);
+    // apperance
+    import "../assets/fonts/font-faces.css";
+    type Theme = "system" | "light" | "dark"
+    export let theme: Theme = "system";
+    type AccentColors = "sky" | "red" | "orange" | "lime" | "green" | "cyan" | "blue" | "royal" | "violet" | "purple" | "pink" 
+    export let accent: AccentColors = "blue";
     color.set(theme);
     accolor.set(accent);
+
+    // vh fix
+    vh.set(window.innerHeight * 0.01);
+    window.addEventListener( "resize", () => vh.set(window.innerHeight * 0.01), true )
+
+
+
 
     if (theme == "system") {
         const system = window.matchMedia("(prefers-color-scheme: dark)");
@@ -36,15 +32,15 @@
 
 <main
     class={`xl-ui`}
-    theme={$color}
-    accent={$accolor}
+    data-theme={$color}
+    data-accent={$accolor}
     style="transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;"
 >
     <div
         class={`xl-ui-wrapper`}
         style={`
-    height: ${$vh * 100}px;
-    min-height: ${$vh * 100}px; 
+    height: ${Number($vh) * 100}px;
+    min-height: ${Number($vh) * 100}px; 
     width: 100vw;
     transition: background-color 0.4s cubic-bezier(0,0,0,1) 0s;;
     `}
@@ -173,7 +169,7 @@
 
     /* ----------------light theme---------------- */
 
-    :global(.xl-ui[theme="dark"]) {
+    :global(.xl-ui[data-theme="dark"]) {
         --theme-text-color: var(--neutral-0);
         --theme-bg-color-1000: var(--cobalt-1000);
         --theme-bg-color-900: var(--cobalt-900);
@@ -196,7 +192,7 @@
 
     /* ----------------light theme---------------- */
 
-    :global(.xl-ui[theme="light"]) {
+    :global(.xl-ui[data-theme="light"]) {
         --theme-text-color: var(--neutral-1000);
         --theme-bg-color-1000: var(--neutral-0);
         --theme-bg-color-900: var(--sky-900);
@@ -218,7 +214,7 @@
 
     /* ----------------red theme---------------- */
 
-    :global(.xl-ui[accent="red"][theme="dark"]) {
+    :global(.xl-ui[data-accent="red"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--red-1000);
         --theme-accent-color-900: var(--red-900);
@@ -226,7 +222,7 @@
         --theme-accent-color-700: var(--red-700);
         --theme-accent-color-600: var(--red-600);
     }
-    :global(.xl-ui[accent="red"][theme="light"]) {
+    :global(.xl-ui[data-accent="red"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--red-1000);
         --theme-accent-color-900: var(--red-900);
@@ -239,7 +235,7 @@
 
     /* ----------------orange theme---------------- */
 
-    :global(.xl-ui[accent="orange"][theme="dark"]) {
+    :global(.xl-ui[data-accent="orange"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--orange-1000);
         --theme-accent-color-900: var(--orange-900);
@@ -247,7 +243,7 @@
         --theme-accent-color-700: var(--orange-700);
         --theme-accent-color-600: var(--orange-600);
     }
-    :global(.xl-ui[accent="orange"][theme="light"]) {
+    :global(.xl-ui[data-accent="orange"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--orange-1000);
         --theme-accent-color-900: var(--orange-900);
@@ -260,7 +256,7 @@
 
     /* ----------------lime theme---------------- */
 
-    :global(.xl-ui[accent="lime"][theme="dark"]) {
+    :global(.xl-ui[data-accent="lime"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--lime-1000);
         --theme-accent-color-900: var(--lime-900);
@@ -268,7 +264,7 @@
         --theme-accent-color-700: var(--lime-700);
         --theme-accent-color-600: var(--lime-600);
     }
-    :global(.xl-ui[accent="lime"][theme="light"]) {
+    :global(.xl-ui[data-accent="lime"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--lime-1000);
         --theme-accent-color-900: var(--lime-900);
@@ -281,7 +277,7 @@
 
     /* ----------------green theme---------------- */
 
-    :global(.xl-ui[accent="green"][theme="dark"]) {
+    :global(.xl-ui[data-accent="green"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-1000);
         --theme-accent-color-1000: var(--green-1000);
         --theme-accent-color-900: var(--green-900);
@@ -289,7 +285,7 @@
         --theme-accent-color-700: var(--green-700);
         --theme-accent-color-600: var(--green-600);
     }
-    :global(.xl-ui[accent="green"][theme="light"]) {
+    :global(.xl-ui[data-accent="green"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-1000);
         --theme-accent-color-1000: var(--green-1000);
         --theme-accent-color-900: var(--green-900);
@@ -302,7 +298,7 @@
 
     /* ----------------cyan theme---------------- */
 
-    :global(.xl-ui[accent="cyan"][theme="dark"]) {
+    :global(.xl-ui[data-accent="cyan"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-1000);
         --theme-accent-color-1000: var(--cyan-1000);
         --theme-accent-color-900: var(--cyan-900);
@@ -310,7 +306,7 @@
         --theme-accent-color-700: var(--cyan-700);
         --theme-accent-color-600: var(--cyan-600);
     }
-    :global(.xl-ui[accent="cyan"][theme="light"]) {
+    :global(.xl-ui[data-accent="cyan"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-1000);
         --theme-accent-color-1000: var(--cyan-1000);
         --theme-accent-color-900: var(--cyan-900);
@@ -323,7 +319,7 @@
 
     /* ----------------blue theme---------------- */
 
-    :global(.xl-ui[accent="blue"][theme="dark"]) {
+    :global(.xl-ui[data-accent="blue"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--blue-1000);
         --theme-accent-color-900: var(--blue-900);
@@ -331,7 +327,7 @@
         --theme-accent-color-700: var(--blue-700);
         --theme-accent-color-600: var(--blue-600);
     }
-    :global(.xl-ui[accent="blue"][theme="light"]) {
+    :global(.xl-ui[data-accent="blue"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--blue-1000);
         --theme-accent-color-900: var(--blue-900);
@@ -344,7 +340,7 @@
 
     /* ----------------royal theme---------------- */
 
-    :global(.xl-ui[accent="royal"][theme="dark"]) {
+    :global(.xl-ui[data-accent="royal"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--royal-1000);
         --theme-accent-color-900: var(--royal-900);
@@ -352,7 +348,7 @@
         --theme-accent-color-700: var(--royal-700);
         --theme-accent-color-600: var(--royal-600);
     }
-    :global(.xl-ui[accent="royal"][theme="light"]) {
+    :global(.xl-ui[data-accent="royal"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--royal-1000);
         --theme-accent-color-900: var(--royal-900);
@@ -365,7 +361,7 @@
 
     /* ----------------violet theme---------------- */
 
-    :global(.xl-ui[accent="violet"][theme="dark"]) {
+    :global(.xl-ui[data-accent="violet"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--violet-1000);
         --theme-accent-color-900: var(--violet-900);
@@ -373,7 +369,7 @@
         --theme-accent-color-700: var(--violet-700);
         --theme-accent-color-600: var(--violet-600);
     }
-    :global(.xl-ui[accent="violet"][theme="light"]) {
+    :global(.xl-ui[data-accent="violet"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--violet-1000);
         --theme-accent-color-900: var(--violet-900);
@@ -386,7 +382,7 @@
 
     /* ----------------purple theme---------------- */
 
-    :global(.xl-ui[accent="purple"][theme="dark"]) {
+    :global(.xl-ui[data-accent="purple"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--purple-1000);
         --theme-accent-color-900: var(--purple-900);
@@ -394,7 +390,7 @@
         --theme-accent-color-700: var(--purple-700);
         --theme-accent-color-600: var(--purple-600);
     }
-    :global(.xl-ui[accent="purple"][theme="light"]) {
+    :global(.xl-ui[data-accent="purple"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--purple-1000);
         --theme-accent-color-900: var(--purple-900);
@@ -407,7 +403,7 @@
 
     /* ----------------pink theme---------------- */
 
-    :global(.xl-ui[accent="pink"][theme="dark"]) {
+    :global(.xl-ui[data-accent="pink"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--pink-1000);
         --theme-accent-color-900: var(--pink-900);
@@ -415,7 +411,7 @@
         --theme-accent-color-700: var(--pink-700);
         --theme-accent-color-600: var(--pink-600);
     }
-    :global(.xl-ui[accent="pink"][theme="light"]) {
+    :global(.xl-ui[data-accent="pink"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--pink-1000);
         --theme-accent-color-900: var(--pink-900);
@@ -428,7 +424,7 @@
 
     /* ----------------sky theme---------------- */
 
-    :global(.xl-ui[accent="sky"][theme="dark"]) {
+    :global(.xl-ui[data-accent="sky"][data-theme="dark"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--sky-600);
         --theme-accent-color-900: var(--sky-700);
@@ -436,7 +432,7 @@
         --theme-accent-color-700: var(--sky-900);
         --theme-accent-color-600: var(--sky-1000);
     }
-    :global(.xl-ui[accent="sky"][theme="light"]) {
+    :global(.xl-ui[data-accent="sky"][data-theme="light"]) {
         --theme-accent-text-color: var(--neutral-0);
         --theme-accent-color-1000: var(--sky-600);
         --theme-accent-color-900: var(--sky-700);
