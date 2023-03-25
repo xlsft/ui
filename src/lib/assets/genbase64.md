@@ -1,3 +1,7 @@
+# THIS THING GENERATE ENUM WITH BASE64 SVG IMAGES AND TYPE WITH NAMES OF ICONS 
+# ICONS IN FIGMA
+
+```cjs
 const fs = require('fs'),
 path = require('path')
 
@@ -48,3 +52,5 @@ categories.forEach(category => {
 
 
 fs.writeFileSync(path.join(__dirname + '/icons.ts'), enums.join('').slice(0, -1))
+
+```
