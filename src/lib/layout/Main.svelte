@@ -1,6 +1,6 @@
 <script>
     // @ts-nocheck
-    import "../../assets/fonts/font-faces.css";
+    import "../assets/fonts/font-faces.css";
     export let theme = "system",
         accent = "blue";
     import { theme as color, vh, accent as accolor } from "../stores";
