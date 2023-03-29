@@ -66,7 +66,7 @@
         justify-content: ${justify};
         align-items: ${align};
         align-content: ${aligncont};
-        flex-wrap: ${wrap}
+        flex-wrap: ${wrap};
         gap: ${gap};
         ${style};
     `}

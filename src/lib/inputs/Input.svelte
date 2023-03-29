@@ -1,307 +1,585 @@
-<script>
-    import { createEventDispatcher } from "svelte";
-    import Icon from "../media/Icon.svelte";
-    const dispatch = createEventDispatcher()
-    export let value = "", disabled = false, style = "", color = "accent", compact = false, placeholder = "", type = "text", state = "default", hide = false
+<script lang="ts">
+    import Icon from "$lib/media/Icon.svelte";
+    import OutClick from "svelte-outclick";
 
-    function input() {
-        if (disabled == false) dispatch('input')
-    }
-    function click() {
-        if (disabled == false) dispatch('click')
-    }
-    let pwd = {type: 'password', icon: 'edit_hidden', state: false}
-    
-    
-    function changePasswordType() {
-        if (pwd.type == 'password')  {
-            type = 'text'
-            pwd.type = 'text'
-            pwd.icon = 'edit_hidden'
-            return
-        }
-        if (pwd.type == 'text')  {
-            type = 'password'
-            pwd.type = 'password'
-            pwd.icon = 'edit_view'
-            return
-        }
-    }
+    // events
+    import { createEventDispatcher, onMount } from "svelte";
+    const dispatch = createEventDispatcher();
+
+    // value
+    /**
+     * Value of input
+     * @param {any} value
+     * ```
+     * <Input value="123" type="number"/>
+     *
+     * <!-- or -->
+     *
+     * <script>
+     *     let value = 123
+     * <script/>
+     *
+     * <Input bind:value={value} type="number"/>
+     * ```
+     * @return {string} value
+     */
+    export let value: any;
+    /**
+     * Set placeholder for input
+     * @param {string} step
+     * ```
+     * <Input placeholder="URL"/>
+     * ```
+     * @return {string} param
+     */
+    export let placeholder: string;
+    type InputTypes =
+        | "email"
+        | "month"
+        | "number"
+        | "password"
+        | "tel"
+        | "text"
+        | "time"
+        | "url"
+        | "week"
+        | "";
+    /**
+     * Set type for input
+     * @param {InputTypes} step
+     * ```
+     * <Input type="number"/>
+     * ```
+     * @return {InputTypes} param
+     */
+    export let type: InputTypes = "text";
+    /**
+     * Set step for input[type="number"]
+     * @param {number} step
+     * ```
+     * <Input step="10"/>
+     * ```
+     * @return {number} param
+     */
+    export let step: number | undefined = undefined;
+    /**
+     * Set min value for input[type="number"]
+     * @param {number} min
+     * ```
+     * <Input min="15"/>
+     * ```
+     * @return {number} param
+     */
+    export let min: number | undefined = undefined;
+    /**
+     * Set max value for input[type="number"]
+     * @param {number} max
+     * ```
+     * <Input max="15"/>
+     * ```
+     * @return {number} param
+     */
+    export let max: number | undefined = undefined;
+    /**
+     * Set minlength for input
+     * @param {number} minlength
+     * ```
+     * <Input minlength="15"/>
+     * ```
+     * @return {number} param
+     */
+    export let minlength: number | undefined = undefined;
+    /**
+     * Set maxlength for input
+     * @param {number} maxlength
+     * ```
+     * <Input maxlength="15"/>
+     * ```
+     * @return {number} param
+     */
+    export let maxlength: number | undefined = undefined;
+    /**
+     * Set regexp pattern
+     * @param {RegExp} pattern
+     * ```
+     * <Input pattern="\d[0-9]"/>
+     * ```
+     * @return {RegExp} regexp
+     */
+    export let pattern: string = "";
+
+    /**
+     * Set prefix in the start of input
+     * @param {string} prefix
+     * ```
+     * <Input prefix="@"/>
+     * ```
+     * @return {HTMLElement} element
+     */
+    export let prefix: string = "";
+    /**
+     * Set postfix in the end of input
+     * @param {string} postfix
+     * ```
+     * <Input postfix="gmail.com"/>
+     * ```
+     * @return {HTMLElement} element
+     */
+    export let postfix: string = "";
+
+    // disabled
+    /**
+     * Disabled feature switch
+     * ```
+     * <Input disabled/>
+     * ```
+     * @return {HTMLElement} param
+     */
+    export let disabled = false;
+    /**
+     * Readonly feature switch
+     * ```
+     * <Input readonly/>
+     * ```
+     * @return {HTMLElement} param
+     */
+    export let readonly = false;
+    disabled == true ? (readonly = true) : (readonly = readonly);
+
+    // apperance
+    /**
+     * Provide custom styles for component
+     * @param {string} style
+     * ```
+     * <Input style="opacity: .5"/>
+     * ```
+     * @return {string} style
+     */
+    export let style: string = "";
+
+    import { getColor } from "$lib/assets/scripts/colors";
+    import type { Colors, Depths } from "$lib/assets/scripts/colors";
+    /**
+     * Set color for component
+     * @param {Color} color
+     * ```
+     * <Input color="red"/>
+     * ```
+     * @return {Color} color
+     */
+    export let color: Colors = "accent";
+
+    /**
+     * Set depth for component color
+     * @param {Depths} color_depth
+     * ```
+     * <Input color_depth="1000"/>
+     * ```
+     * @return {Depths} color depth
+     */
+    export let color_depth: Depths = 1000;
+
+    /**
+     * Set depth for component color on hover
+     * @param {Depths} color_depth_hover
+     * ```
+     * <Input color_depth_hover="900"/>
+     * ```
+     * @return {Depths} color depth
+     */
+    export let color_depth_hover: Depths = 700;
+    let ecolor = getColor(color_depth, color);
+    let hcolor = getColor(color_depth_hover, color);
+    let c: string = ecolor;
+
+    let hover = () => {
+        disabled == false && readonly == false ? (c = hcolor) : (c = c);
+    };
+    let leave = () => {
+        disabled == false && readonly == false ? (c = ecolor) : (c = c);
+    };
+
+    /**
+     * Set width of component
+     * @param {string} width
+     * ```
+     * <Input width="400px"/>
+     * ```
+     * @return {string} style
+     */
+    export let width = "max-content";
+
+    /**
+     * Set height of component
+     * @param {string} height
+     * ```
+     * <Input height="50px"/>
+     * ```
+     * @return {string} style
+     */
+    export let height = "max-content";
+
+    type InputAlign = "left" | "right" | "center";
+    /**
+     * Set text align for input
+     * @param {InputAlign} input_align
+     * ```
+     * <Input input_align="left"/>
+     * ```
+     * @return {InputAlign} style
+     */
+    export let input_align: InputAlign = "center";
+
+    /**
+     * Provide custom styles for input
+     * @param {string} input_style
+     * ```
+     * <Input input_style="opacity: .5"/>
+     * ```
+     * @return {string} style
+     */
+    export let input_style: string = "";
+
+    /**
+     * Set green outline for valid input, red for valid input, and nothing for nothing
+     * @param {boolean} valid
+     * ```
+     * <Input valid="false"/>
+     *
+     * <!-- or -->
+     *
+     * <Input valid/>
+     * ```
+     * @return {HTMLElement} style
+     */
+    export let valid: boolean;
+
+    /**
+     * Set color for outline
+     * @param {Color} outline_color
+     * ```
+     * <Input outline_color="red"/>
+     * ```
+     * @return {Color} color
+     */
+    export let outline_color: Colors = "";
+    let focus = () => {
+        disabled == false && readonly == false && outline_color != ""
+            ? (oc = ocolor)
+            : (oc = oc);
+    };
+    let blur = () => {
+        disabled == false && readonly == false && outline_color != ""
+            ? (oc = "hsla(0,0,0,0)")
+            : (oc = oc);
+    };
+    let ocolor = getColor(1000, outline_color);
+    let oc: string;
+    /**
+     * Set color for text
+     * @param {Color} text_color
+     * ```
+     * <Input text_color="red"/>
+     * ```
+     * @return {Color} color
+     */
+    export let text_color: Colors = "";
+
+    /**
+     * Set depth for text color
+     * @param {Depths} text_color_depth
+     * ```
+     * <Input text_color_depth="900"/>
+     * ```
+     * @return {Depths} color depth
+     */
+    export let text_color_depth: Depths = 1000;
+    let tcolor = getColor(text_color_depth, text_color);
+
+    /**
+     * Copy feature switch
+     * ```
+     * <Input hide/>
+     * ```
+     * @return {boolean} color
+     */
+    export let hide: boolean = false;
+
+    type IconColors = "dark" | "light" | "auto" | "autoinv";
+    /**
+     * Set color for `copy` and `hide/show` icons
+     * @param {IconColors} copy_title_time
+     * ```
+     * <Input icon_color="dark"/>
+     * ```
+     * @return {IconColors} color
+     */
+    export let icon_color: IconColors = "auto";
+
+    /**
+     * Compact input switch
+     * ```
+     * <Input compact/>
+     * ```
+     * @return {HTMLElement} compact
+     */
+    export let compact: boolean = false;
+
+    // interaction
+    let click = () => (disabled == false ? dispatch("click") : () => {});
+    let input = () => (disabled == false ? dispatch("input") : () => {});
+    type VisibilityIcon = "" | "edit_hidden" | "edit_view";
+    let vicon: VisibilityIcon = "edit_view";
+    let vtype: InputTypes;
+    hide == true ? (vtype = type) : (vtype = "");
+    let visibility = () => {
+        if (disabled == true) return;
+        vicon == "edit_view" ? (vicon = "edit_hidden") : (vicon = "edit_view");
+        type == vtype ? (type = "password") : (type = vtype);
+    };
+    hide == true ? visibility() : () => {};
+    /**
+     * Copy feature switch
+     * ```
+     * <Input copy/>
+     * ```
+     * @return {HTMLElement} icon
+     */
+    export let copy: boolean = false;
+
+    /**
+     * Text for copy tooltip
+     * @param {string} copy_title
+     * ```
+     * <Input copy_title="Copied!"/>
+     * ```
+     * @return {string} text
+     */
+    export let copy_title: string = "Copied!";
+
+    /**
+     * Timeout for copy tooltip
+     * @param {number} copy_title_time
+     * ```
+     * <Input copy_title_time="2000"/>
+     * ```
+     * @return {number} ms
+     */
+    export let copy_title_time: number = 2000;
+    let copytitleval: string = "";
+
+    let inputel: HTMLElement;
+    let pos: DOMRect;
+    let time: any;
+    let copyvalue = () => {
+        if (time) clearTimeout(time);
+        time = setTimeout(() => (copytitleval = ""), copy_title_time);
+        pos = inputel.getBoundingClientRect().toJSON();
+        navigator.clipboard.writeText(value);
+        copytitleval = copy_title;
+    };
 </script>
 
-<div class={`xl-ui-input`} style="">
-    {#if hide == true}
-    <div class={`xl-ui-input-button`} on:click={changePasswordType} on:keypress={changePasswordType}>
-        <Icon icon={pwd.icon} />
-    </div>
-    {/if}
-    <input
-        style={style}
-        {compact}
-        {color}
-        {disabled}
-        {placeholder}
-        {state}
-        {...{ type }}
-        bind:value={value}
-        on:input={input}
-        on:click={click}
-    >
+<!-- top: {compact == false ? 5.5 : 0}px); 
+left: calc({pos.x}px + {compact == false ? pos.width + 10 : pos.width + 2}px);  -->
+{#if copytitleval}
+    <div
+        class="xl-ui-input-tooltip"
+        data-compact={compact}
+        style="
+            {compact == false
+            ? `
+                    top: ${pos.y + 5.5}px;
+                    left: ${pos.x + pos.width + 10}px;
+                `
+            : `
+                    top: ${pos.y - 20}px;
+                    left: ${pos.x}px;
+                `}
 
-</div>
+            background: {compact == false
+            ? hcolor
+            : 'background-color: #ffffff00;'};
+            color: {tcolor};
+        "
+    >
+        {copytitleval}
+    </div>
+{/if}
+
+<OutClick on:outclick={blur}>
+    <div
+        aria-disabled={disabled}
+        class={`xl-ui-input`}
+        data-compact={compact}
+        data-state={valid}
+        style="
+            width: {width}; 
+            height: {height}; 
+            outline: 2px solid {oc};
+            background: {c}; 
+            {style}
+        "
+        bind:this={inputel}
+        on:click={focus}
+        on:keypress={focus}
+        on:mouseenter={hover}
+        on:mouseleave={leave}
+    >
+        {#if prefix}
+            <span
+                class={`xl-ui-input-prefix`}
+                data-hide={hide}
+                data-prefix={prefix != "" ? true : false}
+                style="color: {tcolor}"
+            >
+                {prefix}
+            </span>
+        {/if}
+        <input
+            style=" text-align: {input_align}; color: {tcolor}; {input_style}"
+            {placeholder}
+            data-valid={valid}
+            data-hide={hide}
+            data-prefix={prefix != "" ? true : false}
+            data-postfix={postfix != "" ? true : false}
+            {step}
+            {min}
+            {max}
+            {minlength}
+            {maxlength}
+            {pattern}
+            disabled={readonly}
+            data-readonly={readonly}
+            {...{ type }}
+            bind:value
+            on:input={input}
+            on:click={click}
+        />
+
+        {#if postfix}
+            <span
+                class={`xl-ui-input-postfix`}
+                data-hide={hide}
+                style="color: {tcolor}"
+                data-postfix={postfix != "" ? true : false}
+            >
+                {postfix}
+            </span>
+        {/if}
+        {#if hide == true}
+            <div
+                class={`xl-ui-input-button`}
+                on:click={visibility}
+                on:keypress={visibility}
+            >
+                <Icon name={vicon} color={icon_color} size="17px" />
+            </div>
+        {/if}
+        {#if copy == true}
+            <div
+                class={`xl-ui-input-button`}
+                on:click={copyvalue}
+                on:keypress={copyvalue}
+            >
+                <Icon name="edit_clone" color={icon_color} size="17px" />
+            </div>
+        {/if}
+    </div>
+</OutClick>
 
 <style>
+    .xl-ui-input-tooltip[data-compact="true"] {
+        padding: 0px;
+        border-radius: 0px;
+    }
+
+    .xl-ui-input[data-compact="true"] {
+        --padding-rl: 10px;
+        --padding-tb: 5px;
+        gap: 2px;
+    }
+
+    .xl-ui-input {
+        --padding-rl: 25px;
+        --padding-tb: 9px;
+        border-radius: 10px;
+        cursor: text;
+        padding: var(--padding-tb) var(--padding-rl);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    input {
+        outline: none;
+        border: none;
+        text-align: center;
+        box-sizing: border-box;
+        font-family: Rubik;
+        font-size: 15px;
+        background-color: transparent;
+        flex-grow: 1;
+        display: flex;
+        object-fit: fill;
+        padding: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .xl-ui-input-prefix,
+    .xl-ui-input-postfix {
+        opacity: 0.5;
+        line-height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+    }
+
     .xl-ui-input-button:hover {
-        opacity: .5;
+        opacity: 0.5;
     }
 
     .xl-ui-input-button {
-        height: 100%;
-        position: absolute;
-        right: 0px;
-        top: 0px;
-        margin-right: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        width: min-content;
+        margin-left: 15px;
     }
-    
-    input[state="true"] {
+
+    .xl-ui-input[data-state="true"] {
         outline: 2px solid var(--green-1000);
     }
 
-    input[state="false"] {
+    .xl-ui-input[data-state="false"] {
         outline: 2px solid var(--red-1000);
     }
 
-    input[state="default"] {
-        outline: none;
-    }
-
-    .xl-ui-input {
-        position: relative;
-        width: max-content;
-        height: max-content;
-    }
-    
-    input {
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-        outline: none; 
-        border: none;
-        text-align: center; 
-        box-sizing: border-box;
-        font-family: Rubik;
-        font-size: 15px;
-        cursor: pointer;
-        padding: 9px 25px;
-    }
-
-    input:focus {
-        outline: 2px solid var(--theme-accent-color-800);
-    }
-
-    /* ----------------accent---------------- */
-    
-    input[color="accent"] {
-        color: var(--theme-accent-text-color);
-        background-color: var(--theme-accent-color-1000);
-    }
-    input[color="accent"]:hover {
-        background-color: var(--theme-accent-color-700);
-    }
-    
-    /* -------------------------------------------*/
-
-    /* ----------------neutral---------------- */
-    
-    input[color="neutral"] {
-        color: var(--neutral-1000);
-        background-color: var(--neutral-200);
-    }
-    input[color="neutral"]:hover {
-        background-color: var(--neutral-300);
-    }
-    
-    /* -------------------------------------------*/
-
-    /* ----------------cobalt---------------- */
-    
-    input[color="cobalt"] {
-        color: var(--neutral-0);
-        background-color: var(--cobalt-900);
-    }
-    input[color="cobalt"]:hover {
-        background-color: var(--cobalt-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------sky---------------- */
-    
-    input[color="sky"] {
-        color: var(--neutral-1000);
-        background-color: var(--sky-1000);
-    }
-    input[color="sky"]:hover {
-        background-color: var(--sky-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------red---------------- */
-    
-    input[color="red"] {
-        color: var(--neutral-0);
-        background-color: var(--red-1000);
-    }
-    input[color="red"]:hover {
-        background-color: var(--red-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------orange---------------- */
-    
-    input[color="orange"] {
-        color: var(--neutral-0);
-        background-color: var(--orange-1000);
-    }
-    input[color="orange"]:hover {
-        background-color: var(--orange-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------lime---------------- */
-    
-    input[color="lime"] {
-        color: var(--neutral-1000);
-        background-color: var(--lime-1000);
-    }
-    input[color="lime"]:hover {
-        background-color: var(--lime-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------green---------------- */
-    
-    input[color="green"] {
-        color: var(--neutral-1000);
-        background-color: var(--green-1000);
-    }
-    input[color="green"]:hover {
-        background-color: var(--green-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------cyan---------------- */
-    
-    input[color="cyan"] {
-        color: var(--neutral-1000);
-        background-color: var(--cyan-1000);
-    }
-    input[color="cyan"]:hover {
-        background-color: var(--cyan-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------blue---------------- */
-    
-    input[color="blue"] {
-        color: var(--neutral-0);
-        background-color: var(--blue-1000);
-    }
-    input[color="blue"]:hover {
-        background-color: var(--blue-700);
-    }
-
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------royal---------------- */
-    
-    input[color="royal"] {
-        color: var(--neutral-0);
-        background-color: var(--royal-1000);
-    }
-    input[color="royal"]:hover {
-        background-color: var(--royal-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------violet---------------- */
-
-    input[color="violet"] {
-        color: var(--neutral-0);
-        background-color: var(--violet-1000);
-    }
-    input[color="violet"]:hover {
-        background-color: var(--violet-700);
-    }
-    
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------purple---------------- */
-    
-    input[color="purple"] {
-        color: var(--neutral-0);
-        background-color: var(--purple-1000);
-    }
-    input[color="purple"]:hover {
-        background-color: var(--purple-700);
-    }
-
-    /* -------------------------------------------*/
-
-
-
-    /* ----------------pink---------------- */
-
-    input[color="pink"] {
-        color: var(--neutral-0);
-        background-color: var(--pink-1000);
-    }
-    input[color="pink"]:hover {
-        background-color: var(--pink-700);
-    }
-
-    /* -------------------------------------------*/
-
     input:disabled {
-        background-color: var(--neutral-700);
-        color: var(--neutral-300);
+        cursor: not-allowed;
+    }
+    input:disabled[data-readonly="true"] {
+        cursor: text;
+        user-select: text;
+    }
+
+    *[aria-disabled="true"]:hover,
+    *[aria-disabled="true"] {
+        opacity: 0.5;
         cursor: not-allowed;
     }
 
-    input:disabled:hover {
-        background-color: var(--neutral-700);
-        color: var(--neutral-300);
-        cursor: not-allowed;
+    .xl-ui-input-tooltip {
+        font-size: 10px;
+        opacity: 0.3;
+        position: absolute;
+        padding: 5px 10px;
+        border-radius: 10px;
     }
 </style>

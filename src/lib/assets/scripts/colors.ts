@@ -442,11 +442,11 @@ let list = {
     },
 };
 
-export type Colors = "accent" | "neutral" | "cobalt" | "sky" | "red" | "orange" | "lime" | "green" | "cyan" | "blue" | "royal" | "violet" | "purple" | "pink" 
+export type Colors = "accent" | "neutral" | "cobalt" | "sky" | "red" | "orange" | "lime" | "green" | "cyan" | "blue" | "royal" | "violet" | "purple" | "pink" | ""
 export type Depths = 1000 | 900 | 800 | 700 | 600 | 500 | 400 | 300 | 200 | 100 | 0
 
 export function getColor(depth: Depths, name: Colors = 'accent') {
-    console.log(depth, name)
+    if (!name || !depth) return `hsl(0,0,0})`
     let css
     if (name == 'accent') {
         css = `var(--theme-accent-color-${depth})`

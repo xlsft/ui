@@ -1,5 +1,4 @@
 <script>
-    import { Switch, Input, MainStore } from "../lib/index"
+    import { Switch, Input, MainStore } from "../lib/index";
 </script>
-
-<Switch theme/>
+<Switch theme />
