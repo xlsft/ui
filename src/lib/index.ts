@@ -15,6 +15,7 @@
     import Button from "./inputs/Button.svelte" // Button
     import Switch from "./inputs/Switch.svelte" // Switch
     import Input from "./inputs/Input.svelte" // Input
+    import ImageDrop from "./inputs/Image.svelte" // Image dragndrop
 
 
 // EXPORTS
@@ -30,5 +31,5 @@
         Image, Icon,
 
         //* INPUTS
-        Button, Switch, Input
+        Button, Switch, Input, ImageDrop
     }

@@ -1,4 +1,7 @@
-<script>
-    import { Switch, Input, MainStore } from "../lib/index";
+<script lang="ts">
+    import { ImageDrop, Input } from "$lib/index";
+    let value: string = ''
+    let valid: string | boolean = ''
 </script>
-<Switch theme />
+
+<ImageDrop accept={['svg']} multiple capture/>

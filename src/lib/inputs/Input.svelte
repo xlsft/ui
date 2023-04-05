@@ -11,7 +11,7 @@
      * Value of input
      * @param {any} value
      * ```
-     * <Input value="123" type="number"/>
+     * <Input value={123} type="number"/>
      *
      * <!-- or -->
      *
@@ -23,7 +23,7 @@
      * ```
      * @return {string} value
      */
-    export let value: any;
+    export let value: any = "";
     /**
      * Set placeholder for input
      * @param {string} step
@@ -57,7 +57,7 @@
      * Set step for input[type="number"]
      * @param {number} step
      * ```
-     * <Input step="10"/>
+     * <Input step={10}/>
      * ```
      * @return {number} param
      */
@@ -66,7 +66,7 @@
      * Set min value for input[type="number"]
      * @param {number} min
      * ```
-     * <Input min="15"/>
+     * <Input min={15}/>
      * ```
      * @return {number} param
      */
@@ -75,7 +75,7 @@
      * Set max value for input[type="number"]
      * @param {number} max
      * ```
-     * <Input max="15"/>
+     * <Input max={15}/>
      * ```
      * @return {number} param
      */
@@ -84,7 +84,7 @@
      * Set minlength for input
      * @param {number} minlength
      * ```
-     * <Input minlength="15"/>
+     * <Input minlength={15}/>
      * ```
      * @return {number} param
      */
@@ -93,7 +93,7 @@
      * Set maxlength for input
      * @param {number} maxlength
      * ```
-     * <Input maxlength="15"/>
+     * <Input maxlength={15}/>
      * ```
      * @return {number} param
      */
@@ -102,11 +102,11 @@
      * Set regexp pattern
      * @param {RegExp} pattern
      * ```
-     * <Input pattern="\d[0-9]"/>
+     * <Input pattern={\d[0-9]}/>
      * ```
      * @return {RegExp} regexp
      */
-    export let pattern: string = "";
+    export let pattern: RegExp = /./gm;
 
     /**
      * Set prefix in the start of input
@@ -127,7 +127,6 @@
      */
     export let postfix: string = "";
 
-    // disabled
     /**
      * Disabled feature switch
      * ```
@@ -136,6 +135,7 @@
      * @return {HTMLElement} param
      */
     export let disabled = false;
+
     /**
      * Readonly feature switch
      * ```
@@ -173,7 +173,7 @@
      * Set depth for component color
      * @param {Depths} color_depth
      * ```
-     * <Input color_depth="1000"/>
+     * <Input color_depth={1000}/>
      * ```
      * @return {Depths} color depth
      */
@@ -183,7 +183,7 @@
      * Set depth for component color on hover
      * @param {Depths} color_depth_hover
      * ```
-     * <Input color_depth_hover="900"/>
+     * <Input color_depth_hover={900}/>
      * ```
      * @return {Depths} color depth
      */
@@ -207,7 +207,7 @@
      * ```
      * @return {string} style
      */
-    export let width = "max-content";
+    export let width: string = "max-content";
 
     /**
      * Set height of component
@@ -217,7 +217,7 @@
      * ```
      * @return {string} style
      */
-    export let height = "max-content";
+    export let height: string = "max-content";
 
     type InputAlign = "left" | "right" | "center";
     /**
@@ -252,7 +252,7 @@
      * ```
      * @return {HTMLElement} style
      */
-    export let valid: boolean;
+    export let valid: boolean | string;
 
     /**
      * Set color for outline
@@ -289,7 +289,7 @@
      * Set depth for text color
      * @param {Depths} text_color_depth
      * ```
-     * <Input text_color_depth="900"/>
+     * <Input text_color_depth={900}/>
      * ```
      * @return {Depths} color depth
      */
@@ -349,63 +349,54 @@
 
     /**
      * Text for copy tooltip
-     * @param {string} copy_title
+     * @param {string} copy_tooltip
      * ```
-     * <Input copy_title="Copied!"/>
+     * <Input copy_tooltip="Copied!"/>
      * ```
      * @return {string} text
      */
-    export let copy_title: string = "Copied!";
+    export let copy_tooltip: string = "Copied!";
 
     /**
      * Timeout for copy tooltip
-     * @param {number} copy_title_time
+     * @param {number} copy_tooltip_time
      * ```
-     * <Input copy_title_time="2000"/>
+     * <Input copy_tooltip_time={2000}/>
      * ```
      * @return {number} ms
      */
-    export let copy_title_time: number = 2000;
+    export let copy_tooltip_time: number = 2000;
     let copytitleval: string = "";
 
     let inputel: HTMLElement;
-    let pos: DOMRect;
     let time: any;
     let copyvalue = () => {
         if (time) clearTimeout(time);
-        time = setTimeout(() => (copytitleval = ""), copy_title_time);
-        pos = inputel.getBoundingClientRect().toJSON();
+        time = setTimeout(() => (copytitleval = ""), copy_tooltip_time);
         navigator.clipboard.writeText(value);
-        copytitleval = copy_title;
+        copytitleval = copy_tooltip;
     };
+
+    /**
+     * Required feature switch
+     * ```
+     * <Input required/>
+     * ```
+     * @return {HTMLElement} param
+     */
+
+    export let required: boolean = false;
+
+    let inputTest = () => {
+        if (required == false) return;
+        if (value && value.match(pattern)) valid = "";
+        else valid = false;
+    };
+
+    export let tooltip: string = "";
+
+    import { fade } from "svelte/transition";
 </script>
-
-<!-- top: {compact == false ? 5.5 : 0}px); 
-left: calc({pos.x}px + {compact == false ? pos.width + 10 : pos.width + 2}px);  -->
-{#if copytitleval}
-    <div
-        class="xl-ui-input-tooltip"
-        data-compact={compact}
-        style="
-            {compact == false
-            ? `
-                    top: ${pos.y + 5.5}px;
-                    left: ${pos.x + pos.width + 10}px;
-                `
-            : `
-                    top: ${pos.y - 20}px;
-                    left: ${pos.x}px;
-                `}
-
-            background: {compact == false
-            ? hcolor
-            : 'background-color: #ffffff00;'};
-            color: {tcolor};
-        "
-    >
-        {copytitleval}
-    </div>
-{/if}
 
 <OutClick on:outclick={blur}>
     <div
@@ -436,24 +427,59 @@ left: calc({pos.x}px + {compact == false ? pos.width + 10 : pos.width + 2}px);  
                 {prefix}
             </span>
         {/if}
+
+        {#if copytitleval}
+            <div
+                transition:fade={{ duration: 250 }}
+                class="xl-ui-input-tooltip"
+                data-compact={compact}
+                style="
+                top: -25px;
+                left: 0px;
+                background-color: #ffffff00;
+                color: {tcolor};
+                transition: 0s;"
+            >
+                {copytitleval}
+            </div>
+        {/if}
+
+        {#if tooltip}
+            <div
+                class="xl-ui-input-tooltip"
+                data-compact={compact}
+                style="
+                    top: -25px;
+                    right: 0px;
+                    background-color: #ffffff00;
+                    color: {tcolor};
+                    transition: 0s;"
+            >
+                {tooltip}
+            </div>
+        {/if}
         <input
-            style=" text-align: {input_align}; color: {tcolor}; {input_style}"
-            {placeholder}
+            bind:value
+            style="text-align: {input_align}; color: {tcolor}; {input_style}"
+            placeholder="{placeholder}{required == true ? '*' : ''}"
+            disabled={readonly}
             data-valid={valid}
             data-hide={hide}
             data-prefix={prefix != "" ? true : false}
             data-postfix={postfix != "" ? true : false}
+            data-readonly={readonly}
             {step}
             {min}
             {max}
             {minlength}
             {maxlength}
-            {pattern}
-            disabled={readonly}
-            data-readonly={readonly}
+            pattern={`${pattern}`}
+            {required}
             {...{ type }}
-            bind:value
-            on:input={input}
+            on:input={() => {
+                input();
+                inputTest();
+            }}
             on:click={click}
         />
 
@@ -489,11 +515,6 @@ left: calc({pos.x}px + {compact == false ? pos.width + 10 : pos.width + 2}px);  
 </OutClick>
 
 <style>
-    .xl-ui-input-tooltip[data-compact="true"] {
-        padding: 0px;
-        border-radius: 0px;
-    }
-
     .xl-ui-input[data-compact="true"] {
         --padding-rl: 10px;
         --padding-tb: 5px;
@@ -510,7 +531,7 @@ left: calc({pos.x}px + {compact == false ? pos.width + 10 : pos.width + 2}px);  
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 5px;
+        gap: 15px;
     }
 
     input {
@@ -521,13 +542,12 @@ left: calc({pos.x}px + {compact == false ? pos.width + 10 : pos.width + 2}px);  
         font-family: Rubik;
         font-size: 15px;
         background-color: transparent;
-        flex-grow: 1;
         display: flex;
-        object-fit: fill;
-        padding: 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        flex-grow: 1;
+        flex-shrink: 1;
     }
 
     .xl-ui-input-prefix,
@@ -550,7 +570,6 @@ left: calc({pos.x}px + {compact == false ? pos.width + 10 : pos.width + 2}px);  
         justify-content: center;
         cursor: pointer;
         width: min-content;
-        margin-left: 15px;
     }
 
     .xl-ui-input[data-state="true"] {
@@ -579,7 +598,17 @@ left: calc({pos.x}px + {compact == false ? pos.width + 10 : pos.width + 2}px);  
         font-size: 10px;
         opacity: 0.3;
         position: absolute;
-        padding: 5px 10px;
+        padding: 5px 0px;
         border-radius: 10px;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        display: none;
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: textfield;
     }
 </style>
