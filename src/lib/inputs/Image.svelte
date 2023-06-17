@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Icon from "$lib/media/Icon.svelte";
+
     /**
      * Accept extensions array
      * @param {Array<String>} copy_tooltip
@@ -64,10 +66,20 @@
 </script>
 
 <div class="xl-ui-input-image" style="width:{width};height:{height};{style}">
+    <Icon name="edit_picture" size="30px"/>
+    <div class="xl-ui-input-image-extensions">{acceptString.join(",")}</div>
     <input type="file" accept={acceptString.join(",")} {multiple} {capture} style="display: none"/>
 </div>
 
 <style>
+    .xl-ui-input-image-extensions {
+        font-size: 10px;
+        opacity: 0.3;
+        position: absolute;
+        top: -25px;
+        right: 0px;
+    }
+
     .xl-ui-input-image {
         padding: 15px;
         display: flex;
@@ -75,5 +87,7 @@
         justify-content: center;
         border-radius: 10px;
         outline: 2px dashed black;
+        flex-direction: column;
+        position: relative;
     }
 </style>
