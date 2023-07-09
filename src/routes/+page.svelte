@@ -1,9 +1,10 @@
-<script lang="ts">
-    import { ImageDrop, Input } from "$lib/index";
-    let value: string = "";
-    let valid: string | boolean = "";
+<script>
+    import Input from "$lib/inputs/Input.svelte";
+    import Icon from "$lib/media/Icon.svelte";
 </script>
 
-<Input type="text" copy bind:value bind:valid />
 
-<ImageDrop accept={["svg"]} multiple capture />
+<Input width="300px" placeholder="Плейсхолдер"> 
+    <Icon slot="prefix"/>
+</Input>
+

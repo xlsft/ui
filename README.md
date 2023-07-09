@@ -1,35 +1,91 @@
-# XL UI
+# TODO
+
+## ./core (CSS):
+### basic
+- [x] body
+- [x] selection
+- [x] scrollbar
+### typography
+- [ ] h1, h2, h3, h4, h5, h6
+- [ ] paragraph
+- [ ] anchor (link)
+- [ ] label
+- [ ] bloquote
+### elements 
+- [ ] loading (spinner) (custom element api)
+- [ ] card (content zone) (custom element api)
+- [ ] skeleton (animated div on loading) (custom element api)
+- [ ] badge (custom element api)
+- [ ] hbr,vbr (horizontal / vertical dividers) (custom element api)
+- [ ] ul / li
 
 
+## ./colors (Theme and colors):
+- [x] themes
+- [x] accent
+- [x] colors
+
+## ./ (ui):
+### layout
+- [x] main (ui wrapper)
+- [x] flex
+- [ ] grid
+- [ ] table (wrapper, head, body, foot, items)
+- [ ] accordions (wrapper, items)
+- [ ] pagination (wrapper, items)
+- [ ] steps (wrapper, items)
+- [ ] tabs (wrapper, items)
+- [ ] dropdown (wrapper, items)
+- [ ] gallery (wrapper, items)
+- [ ] carousel gallery (wrapper, items)
+- [ ] breadcrumbs
+### input
+- [x] button
+- [x] input 
+    - [ ] range
+- [x] switch
+    - [x] light switch
+- [ ] chips (wrapper / items)
+- [ ] file 
+    - [ ] document 
+    - [ ] image
+- [ ] filedrop
+    - [ ] document 
+    - [ ] image (possibly with image editor)
+- [ ] date & time (calendar)
+- [ ] amount (- number +)
+- [ ] textarea
+- [ ] select (wrapper / items)
+- [ ] checkbox (wrapper / items)
+- [ ] radio (wrapper / items)
+- [ ] radio group (wrapper / items)
+- [ ] range
+- [ ] color
+- [ ] rating
+- [ ] quick actions
+- [ ] auth key
+- [ ] form
+### media
+- [x] icon
+- [x] image
+- [x] video
+- [ ] avatar
+- [ ] code
+### info
+- [ ] progress bar
+- [ ] progress radial
+- [ ] radial (donut/pie) chart
+- [ ] bar chart
+- [ ] line chart
+### effects
+- [x] noise
 
 
-# Quick Start
-
-Before using we recommend you have at least moderate experience with [SvelteKit](https://kit.svelte.dev/) and [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-
-Let's start from creating vite app
-
-```
-# create new vite app
-npm create vite@latest APP_NAME
-
-# provide a package name and choose svelte template
-√ Package name: ... app-name
-? Select a framework: » - Use arrow-keys. Return to submit.
-    Vanilla
-    Vue
-    React
-    Preact
-    Lit
->   Svelte
-    Others
-
-# choose a sveltekit variant
-? Select a variant: » - Use arrow-keys. Return to submit.
-    JavaScript
-    TypeScript
->   SvelteKit ↗
-
-
-# finish install with chosing your preffered options
-```
+## ./utils (Utilities and call functions):
+### call functions
+- [ ] dialog and modal
+- [ ] drawer whit touch support
+- [ ] toast notification
+- [ ] favicon & title notification
+- [ ] tooltip
+- [ ] dropdown

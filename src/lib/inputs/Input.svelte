@@ -1,614 +1,262 @@
 <script lang="ts">
     import Icon from "$lib/media/Icon.svelte";
-    import OutClick from "svelte-outclick";
-
-    // events
     import { createEventDispatcher, onMount } from "svelte";
+    import { getColor, type Colors } from "$lib/assets/scripts/colors";
+    import Flex from "$lib/layout/Flex.svelte";
+    import Noise from "$lib/effects/Noise.svelte";
+    import { text } from "@sveltejs/kit";
+    import measureText from "$lib/assets/scripts/measureText";
+    import { blur as blurred } from 'svelte/transition';
+    import { expoInOut } from "svelte/easing";
+    import { tweened } from 'svelte/motion';
+
+
+
     const dispatch = createEventDispatcher();
-
-    // value
-    /**
-     * Value of input
-     * @param {any} value
-     * ```
-     * <Input value={123} type="number"/>
-     *
-     * <!-- or -->
-     *
-     * <script>
-     *     let value = 123
-     * <script/>
-     *
-     * <Input bind:value={value} type="number"/>
-     * ```
-     * @return {string} value
-     */
-    export let value: any = "";
-    /**
-     * Set placeholder for input
-     * @param {string} step
-     * ```
-     * <Input placeholder="URL"/>
-     * ```
-     * @return {string} param
-     */
-    export let placeholder: string;
-    type InputTypes =
-        | "email"
-        | "month"
-        | "number"
-        | "password"
-        | "tel"
-        | "text"
-        | "time"
-        | "url"
-        | "week"
-        | "";
-    /**
-     * Set type for input
-     * @param {InputTypes} step
-     * ```
-     * <Input type="number"/>
-     * ```
-     * @return {InputTypes} param
-     */
-    export let type: InputTypes = "text";
-    /**
-     * Set step for input[type="number"]
-     * @param {number} step
-     * ```
-     * <Input step={10}/>
-     * ```
-     * @return {number} param
-     */
-    export let step: number | undefined = undefined;
-    /**
-     * Set min value for input[type="number"]
-     * @param {number} min
-     * ```
-     * <Input min={15}/>
-     * ```
-     * @return {number} param
-     */
-    export let min: number | undefined = undefined;
-    /**
-     * Set max value for input[type="number"]
-     * @param {number} max
-     * ```
-     * <Input max={15}/>
-     * ```
-     * @return {number} param
-     */
-    export let max: number | undefined = undefined;
-    /**
-     * Set minlength for input
-     * @param {number} minlength
-     * ```
-     * <Input minlength={15}/>
-     * ```
-     * @return {number} param
-     */
-    export let minlength: number | undefined = undefined;
-    /**
-     * Set maxlength for input
-     * @param {number} maxlength
-     * ```
-     * <Input maxlength={15}/>
-     * ```
-     * @return {number} param
-     */
-    export let maxlength: number | undefined = undefined;
-    /**
-     * Set regexp pattern
-     * @param {RegExp} pattern
-     * ```
-     * <Input pattern={\d[0-9]}/>
-     * ```
-     * @return {RegExp} regexp
-     */
-    export let pattern: RegExp = /./gm;
+    type InputTypes = "email" | "number" | "password" | "tel" | "text" | "url"
+    
+    // ------------------ Apperance ------------------
 
     /**
-     * Set prefix in the start of input
-     * @param {string} prefix
+     * Set width for component
      * ```
-     * <Input prefix="@"/>
+     * <Input width="300px"/>
      * ```
-     * @return {HTMLElement} element
      */
-    export let prefix: string = "";
-    /**
-     * Set postfix in the end of input
-     * @param {string} postfix
-     * ```
-     * <Input postfix="gmail.com"/>
-     * ```
-     * @return {HTMLElement} element
-     */
-    export let postfix: string = "";
+    export let width = "300px";
 
     /**
-     * Disabled feature switch
-     * ```
-     * <Input disabled/>
-     * ```
-     * @return {HTMLElement} param
-     */
-    export let disabled = false;
-
-    /**
-     * Readonly feature switch
-     * ```
-     * <Input readonly/>
-     * ```
-     * @return {HTMLElement} param
-     */
-    export let readonly = false;
-    disabled == true ? (readonly = true) : (readonly = readonly);
-
-    // apperance
-    /**
-     * Provide custom styles for component
-     * @param {string} style
-     * ```
-     * <Input style="opacity: .5"/>
-     * ```
-     * @return {string} style
-     */
-    export let style: string = "";
-
-    import { getColor } from "$lib/assets/scripts/colors";
-    import type { Colors, Depths } from "$lib/assets/scripts/colors";
-    /**
-     * Set color for component
-     * @param {Color} color
-     * ```
-     * <Input color="red"/>
-     * ```
-     * @return {Color} color
-     */
-    export let color: Colors = "accent";
-
-    /**
-     * Set depth for component color
-     * @param {Depths} color_depth
-     * ```
-     * <Input color_depth={1000}/>
-     * ```
-     * @return {Depths} color depth
-     */
-    export let color_depth: Depths = 1000;
-
-    /**
-     * Set depth for component color on hover
-     * @param {Depths} color_depth_hover
-     * ```
-     * <Input color_depth_hover={900}/>
-     * ```
-     * @return {Depths} color depth
-     */
-    export let color_depth_hover: Depths = 700;
-    let ecolor = getColor(color_depth, color);
-    let hcolor = getColor(color_depth_hover, color);
-    let c: string = ecolor;
-
-    let hover = () => {
-        disabled == false && readonly == false ? (c = hcolor) : (c = c);
-    };
-    let leave = () => {
-        disabled == false && readonly == false ? (c = ecolor) : (c = c);
-    };
-
-    /**
-     * Set width of component
-     * @param {string} width
-     * ```
-     * <Input width="400px"/>
-     * ```
-     * @return {string} style
-     */
-    export let width: string = "max-content";
-
-    /**
-     * Set height of component
-     * @param {string} height
+     * Set height for component
      * ```
      * <Input height="50px"/>
      * ```
-     * @return {string} style
      */
-    export let height: string = "max-content";
-
-    type InputAlign = "left" | "right" | "center";
-    /**
-     * Set text align for input
-     * @param {InputAlign} input_align
-     * ```
-     * <Input input_align="left"/>
-     * ```
-     * @return {InputAlign} style
-     */
-    export let input_align: InputAlign = "center";
+    export let height = "40px";
 
     /**
-     * Provide custom styles for input
-     * @param {string} input_style
+     * Set text align
      * ```
-     * <Input input_style="opacity: .5"/>
+     * <Input align="left"/>
      * ```
-     * @return {string} style
      */
-    export let input_style: string = "";
+    export let align: "left" | "center" | "right" = "left";
 
     /**
-     * Set green outline for valid input, red for valid input, and nothing for nothing
-     * @param {boolean} valid
+     * Set border color
      * ```
-     * <Input valid="false"/>
-     *
-     * <!-- or -->
-     *
-     * <Input valid/>
+     * <Input border="red"/>
      * ```
-     * @return {HTMLElement} style
      */
-    export let valid: boolean | string;
+    export let border: Colors = ''
 
     /**
-     * Set color for outline
-     * @param {Color} outline_color
+     * Input placeholder
      * ```
-     * <Input outline_color="red"/>
+     * <Input placeholder="E-mail"/>
      * ```
-     * @return {Color} color
      */
-    export let outline_color: Colors = "";
-    let focus = () => {
-        disabled == false && readonly == false && outline_color != ""
-            ? (oc = ocolor)
-            : (oc = oc);
-    };
-    let blur = () => {
-        disabled == false && readonly == false && outline_color != ""
-            ? (oc = "hsla(0,0,0,0)")
-            : (oc = oc);
-    };
-    let ocolor = getColor(1000, outline_color);
-    let oc: string;
-    /**
-     * Set color for text
-     * @param {Color} text_color
-     * ```
-     * <Input text_color="red"/>
-     * ```
-     * @return {Color} color
-     */
-    export let text_color: Colors = "";
+     export let placeholder: string = ''
+
+    // ------------------ Interaction ------------------
 
     /**
-     * Set depth for text color
-     * @param {Depths} text_color_depth
+     * Disabled switch
      * ```
-     * <Input text_color_depth={900}/>
+     * <Input disabled/>
      * ```
-     * @return {Depths} color depth
      */
-    export let text_color_depth: Depths = 1000;
-    let tcolor = getColor(text_color_depth, text_color);
+    export let disabled = false
 
     /**
-     * Copy feature switch
+     * Value of input
      * ```
-     * <Input hide/>
+     * <Input bind:value/>
      * ```
-     * @return {boolean} color
      */
-    export let hide: boolean = false;
-
-    type IconColors = "dark" | "light" | "auto" | "autoinv";
-    /**
-     * Set color for `copy` and `hide/show` icons
-     * @param {IconColors} copy_title_time
-     * ```
-     * <Input icon_color="dark"/>
-     * ```
-     * @return {IconColors} color
-     */
-    export let icon_color: IconColors = "auto";
+     export let value: string = ''
 
     /**
-     * Compact input switch
+     * Set type for input
      * ```
-     * <Input compact/>
+     * <Input type="number"/>
      * ```
-     * @return {HTMLElement} compact
      */
-    export let compact: boolean = false;
+    export let type: InputTypes = "text";
 
-    // interaction
-    let click = () => (disabled == false ? dispatch("click") : () => {});
-    let input = () => (disabled == false ? dispatch("input") : () => {});
-    type VisibilityIcon = "" | "edit_hidden" | "edit_view";
-    let vicon: VisibilityIcon = "edit_view";
-    let vtype: InputTypes;
-    hide == true ? (vtype = type) : (vtype = "");
-    let visibility = () => {
-        if (disabled == true) return;
-        vicon == "edit_view" ? (vicon = "edit_hidden") : (vicon = "edit_view");
-        type == vtype ? (type = "password") : (type = vtype);
-    };
-    hide == true ? visibility() : () => {};
-    /**
-     * Copy feature switch
-     * ```
-     * <Input copy/>
-     * ```
-     * @return {HTMLElement} icon
-     */
-    export let copy: boolean = false;
 
-    /**
-     * Text for copy tooltip
-     * @param {string} copy_tooltip
-     * ```
-     * <Input copy_tooltip="Copied!"/>
-     * ```
-     * @return {string} text
-     */
-    export let copy_tooltip: string = "Copied!";
+    let element: HTMLElement, size: any = { width: 0, heigth: 0 }, input_element: HTMLElement, input_size: any = { width: 0 }
+    let element_color: string = 'var(--theme-bg-color-900)'
+    let border_color: string = 'rgba(0,0,0,0)';
+    let hidden = type == 'password' ? true : false;
+    let hidden_columns = 0
+    let hidden_width: number = measureText(value)
+    let hidden_width_animation = tweened(0, { duration: 50, easing: expoInOut });
 
-    /**
-     * Timeout for copy tooltip
-     * @param {number} copy_tooltip_time
-     * ```
-     * <Input copy_tooltip_time={2000}/>
-     * ```
-     * @return {number} ms
-     */
-    export let copy_tooltip_time: number = 2000;
-    let copytitleval: string = "";
+    onMount(() => { 
+        size.width = element.offsetWidth - (type == 'password' ? 26 : 0) - ($$slots.prefix ? 26 : 0) - ($$slots.postfix ? 26 : 0);
+        size.height = element.offsetHeight - 20
+        input_size.width = input_element.offsetWidth
+    })
 
-    let inputel: HTMLElement;
-    let time: any;
-    let copyvalue = () => {
-        if (time) clearTimeout(time);
-        time = setTimeout(() => (copytitleval = ""), copy_tooltip_time);
-        navigator.clipboard.writeText(value);
-        copytitleval = copy_tooltip;
-    };
-
-    /**
-     * Required feature switch
-     * ```
-     * <Input required/>
-     * ```
-     * @return {HTMLElement} param
-     */
-
-    export let required: boolean = false;
-
-    let inputTest = () => {
-        if (required == false) return;
-        if (value && value.match(pattern)) valid = "";
-        else valid = false;
-    };
-
-    export let tooltip: string = "";
-
-    import { fade } from "svelte/transition";
+    const element_type = (node: any): any => { node.type = type == 'password' ? hidden == false ? 'text' : `text` : type}
+    const click = () => disabled == false ? dispatch("click") : null;
+    const input = () => { if (disabled == false) { dispatch("input"); hidden_columns = hidden_columns + 3; hidden_width_animation.set(hidden == true ? measureText(value) : 0)} }
+    const focus = () => disabled == false ? border_color = getColor(1000, 'accent') : null;
+    const blur = () => disabled == false ? border_color = 'rgba(0,0,0,0)' : null;
+    const hover = () => disabled == false ? element_color = 'var(--theme-bg-color-800)' : null;
+    const leave = () => disabled == false ? element_color = 'var(--theme-bg-color-900)' : null;
+    const hide = () => { if (hidden == false) { hidden = true; hidden_width_animation.set(hidden_width) } else { hidden = false; hidden_width_animation.set(0) } }
+    
 </script>
 
-<OutClick on:outclick={blur}>
-    <div
-        aria-disabled={disabled}
-        class={`xl-ui-input`}
-        data-compact={compact}
-        data-state={valid}
-        style="
-            width: {width}; 
-            height: {height}; 
-            outline: 2px solid {oc};
-            background: {c}; 
-            {style}
-        "
-        bind:this={inputel}
-        on:click={focus}
-        on:keypress={focus}
-        on:mouseenter={hover}
-        on:mouseleave={leave}
+<!-- 
+    @component 
+    # ```Input```
+
+    Input element. Can be used as text, number, password, date or other input
+
+    Here is example usage with example params:
+
+    ```
+    <Input
+        type="number"
+        width="300px"
+        height="50px"
+        align="left"
+        border="red"
+        placeholder="E-mail"
+        disabled
+        bind:value
+        on:click={() => {}}
+        on:input={() => {}}
     >
-        {#if prefix}
-            <span
-                class={`xl-ui-input-prefix`}
-                data-hide={hide}
-                data-prefix={prefix != "" ? true : false}
-                style="color: {tcolor}"
-            >
-                {prefix}
-            </span>
-        {/if}
+        <Icon slot="prefix"/>
+        <Icon slot="postfix"/>
+    </Input>
+    ```
 
-        {#if copytitleval}
-            <div
-                transition:fade={{ duration: 250 }}
-                class="xl-ui-input-tooltip"
-                data-compact={compact}
-                style="
-                top: -25px;
-                left: 0px;
-                background-color: #ffffff00;
-                color: {tcolor};
-                transition: 0s;"
-            >
-                {copytitleval}
-            </div>
-        {/if}
+    ```@xl-soft/ui```
+-->
+<div 
+    class={`xl-ui-input`}
+    bind:this={element}
+    on:click={click}
+    on:keypress={click}
+    on:mouseenter={hover}
+    on:mouseleave={leave}
+    role="presentation"
+    aria-atomic="true"
+    aria-relevant="all"
+    data-disabled={disabled}
+    style={`                
+        background: ${disabled == false ? element_color : 'var(--theme-disabled)'};
+        width: ${width};
+        height: ${height};
+        border: 2px solid ${disabled == false ? border ? border : border_color : 'rgba(0,0,0,0)'}
+    `}
+>   
+    {#if $$slots.prefix}
+        <Flex width="16px" height="16px" style="opacity: .5; flex-grow: 1;">
+            <slot name="prefix"/> 
+        </Flex>
+    {/if}
 
-        {#if tooltip}
-            <div
-                class="xl-ui-input-tooltip"
-                data-compact={compact}
-                style="
-                    top: -25px;
-                    right: 0px;
-                    background-color: #ffffff00;
-                    color: {tcolor};
-                    transition: 0s;"
-            >
-                {tooltip}
-            </div>
-        {/if}
-        <input
-            bind:value
-            style="text-align: {input_align}; color: {tcolor}; {input_style}"
-            placeholder="{placeholder}{required == true ? '*' : ''}"
-            disabled={readonly}
-            data-valid={valid}
-            data-hide={hide}
-            data-prefix={prefix != "" ? true : false}
-            data-postfix={postfix != "" ? true : false}
-            data-readonly={readonly}
-            {step}
-            {min}
-            {max}
-            {minlength}
-            {maxlength}
-            pattern={`${pattern}`}
-            {required}
-            {...{ type }}
-            on:input={() => {
-                input();
-                inputTest();
-            }}
-            on:click={click}
+    <input
+        bind:this={input_element}
+        bind:value={value}
+        on:click={focus}
+        on:input={() => { input(); hidden_width = measureText(value) }}
+        on:blur={blur}
+        use:element_type
+        data-hidden={value ? hidden : false}
+        style={`text-align: ${align};`}
+        {placeholder}
+        {disabled}
+    />
+    
+    <div 
+        class={`xl-ui-input-hidden`} 
+        style={`
+            position: absolute; 
+            pointer-events:none;
+            top: 50%; 
+            left: ${$$slots.prefix ? '51px' : '25px'};  
+            transform: translate(0%,-50%);
+            width: ${$hidden_width_animation}px;
+            max-width: ${input_size.width}px;
+            height: ${size.height}px;
+            border-radius: 4px;
+            overflow: hidden;
+        `}
+    >
+        <Noise 
+            columns={hidden_columns} 
+            style={`
+                position: absolute; 
+                pointer-events:none;
+                width: ${$hidden_width_animation}px;
+                max-width: ${input_size.width}px;
+                height: ${size.height}px;
+                top: 50%; 
+                left: 0px; 
+                transform: translate(0%,-50%);
+            `}
+            
         />
-
-        {#if postfix}
-            <span
-                class={`xl-ui-input-postfix`}
-                data-hide={hide}
-                style="color: {tcolor}"
-                data-postfix={postfix != "" ? true : false}
-            >
-                {postfix}
-            </span>
-        {/if}
-        {#if hide == true}
-            <div
-                class={`xl-ui-input-button`}
-                on:click={visibility}
-                on:keypress={visibility}
-            >
-                <Icon name={vicon} color={icon_color} size="17px" />
-            </div>
-        {/if}
-        {#if copy == true}
-            <div
-                class={`xl-ui-input-button`}
-                on:click={copyvalue}
-                on:keypress={copyvalue}
-            >
-                <Icon name="edit_clone" color={icon_color} size="17px" />
-            </div>
-        {/if}
     </div>
-</OutClick>
+    
+    {#if $$slots.postfix}
+        <Flex width="16px" height="16px" style="opacity: .5; flex-grow: 1;">
+            <slot name="postfix"/> 
+        </Flex>
+    {/if}
+
+    {#if type == 'password'}
+        <Flex width="16px" height="16px">
+            <Icon button={!disabled} on:click={hide} opacity={disabled ? 0.5 : 1} category="auth" name={hidden == true ? 'hidden' : 'showed'}/>
+        </Flex>
+    {/if}
+</div>
 
 <style>
-    .xl-ui-input[data-compact="true"] {
-        --padding-rl: 10px;
-        --padding-tb: 5px;
-        gap: 2px;
-    }
-
     .xl-ui-input {
-        --padding-rl: 25px;
-        --padding-tb: 9px;
-        border-radius: 10px;
-        cursor: text;
-        padding: var(--padding-tb) var(--padding-rl);
-        position: relative;
+        border-radius: 8px;
+        padding: 10px 25px;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 15px;
+        flex-direction: row;
+        gap: 10px;
+        position: relative;
     }
 
-    input {
-        outline: none;
+    .xl-ui-input > input, input:active {
         border: none;
-        text-align: center;
-        box-sizing: border-box;
-        font-family: Rubik;
-        font-size: 15px;
-        background-color: transparent;
+        outline: none;
+        background: rgba(0, 0, 0, 0);
+        border-radius: 8px;
+        padding: 0px;
         display: flex;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         flex-grow: 1;
         flex-shrink: 1;
+        font-size: 16px;
+        color: var(--theme-text-color)
     }
 
-    .xl-ui-input-prefix,
-    .xl-ui-input-postfix {
-        opacity: 0.5;
-        line-height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 15px;
+    .xl-ui-input > input[data-hidden="true"] {
+        caret-color: transparent;
+        color: transparent;
     }
 
-    .xl-ui-input-button:hover {
-        opacity: 0.5;
+    .xl-ui-input > input[data-hidden="true"]::selection {
+        background: transparent;
     }
 
-    .xl-ui-input-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        width: min-content;
-    }
-
-    .xl-ui-input[data-state="true"] {
-        outline: 2px solid var(--green-1000);
-    }
-
-    .xl-ui-input[data-state="false"] {
-        outline: 2px solid var(--red-1000);
-    }
-
-    input:disabled {
-        cursor: not-allowed;
-    }
-    input:disabled[data-readonly="true"] {
-        cursor: text;
-        user-select: text;
-    }
-
-    *[aria-disabled="true"]:hover,
-    *[aria-disabled="true"] {
-        opacity: 0.5;
+    .xl-ui-input[data-disabled="true"], input:disabled {
         cursor: not-allowed;
     }
 
-    .xl-ui-input-tooltip {
-        font-size: 10px;
-        opacity: 0.3;
-        position: absolute;
-        padding: 5px 0px;
-        border-radius: 10px;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        display: none;
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    input[type="number"] {
-        -moz-appearance: textfield;
-        appearance: textfield;
-    }
 </style>
