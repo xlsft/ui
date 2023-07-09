@@ -1,8 +1,8 @@
-name: publish
+name: npm
 
 on:
   release:
-    types: [created]
+    types: [created, edited]
 
 jobs:
   build:
