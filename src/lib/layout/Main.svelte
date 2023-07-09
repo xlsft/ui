@@ -1,12 +1,10 @@
 <script lang="ts">
     import { theme as theme_store, vh, accent as accent_store } from "../stores";
     import "../assets/fonts/font-faces.css";
-    import { getRoot, type AccentColors } from "$lib/assets/scripts/colors";
+    import { getRoot, type AccentColors, type Theme } from "$lib/assets/scripts/colors";
     
 
     // ------------------ Apperance ------------------
-
-    type Theme = "system" | "light" | "dark";
 
     /**
      * Set theme for XL UI
