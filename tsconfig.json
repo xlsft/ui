@@ -8,5 +8,6 @@
         "skipLibCheck": true,
         "moduleResolution": "node"
     },
+    
     "extends": "./.svelte-kit/tsconfig.json"
 }
