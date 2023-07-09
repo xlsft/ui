@@ -4,7 +4,8 @@
     import { getColor } from "$lib/assets/scripts/colors";
     import type { Colors, Depths } from "$lib/assets/scripts/colors";
     import { theme as theme_store } from "../stores";
-
+    import { tweened } from "svelte/motion";
+    import { cubicInOut } from "svelte/easing";
     
     // ------------------ Apperance ------------------
 
@@ -65,9 +66,6 @@
 
     // ------------------ Animation ------------------
 
-    import { tweened } from "svelte/motion";
-    import { cubicInOut } from "svelte/easing";
-    import type { IconList } from "$lib/assets/scripts/icons";
     let anim = (dur: number) => { return tweened(5, { duration: dur, easing: cubicInOut }) };
     let base_pos = { start: 5, end: 45 };
     let knob_pos = anim(400), knob_shadow_1_pos = anim(455), knob_shadow_2_pos = anim(510);
