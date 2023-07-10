@@ -30,7 +30,6 @@
     onDestroy(() => clearInterval(generate))
 </script>
 
-
 <div 
     class={`xl-ui-effect-noise`} 
     style ={`

@@ -88,19 +88,20 @@
     let element_color: string = 'var(--theme-bg-color-900)'
     let border_color: string = 'rgba(0,0,0,0)';
     let hidden = type == 'password' ? true : false;
-    let hidden_columns = 0
     let hidden_width: number = measureText(value)
+    let hidden_columns = Math.round(hidden_width / 7) + 3
     let hidden_width_animation = tweened(0, { duration: 50, easing: expoInOut });
 
     onMount(() => { 
         size.width = element.offsetWidth - (type == 'password' ? 26 : 0) - ($$slots.prefix ? 26 : 0) - ($$slots.postfix ? 26 : 0);
         size.height = element.offsetHeight - 20
         input_size.width = input_element.offsetWidth
+        if (disabled == false && type == 'number') hidden_width_animation.set(hidden_width)
     })
 
     const element_type = (node: any): any => { node.type = type == 'password' ? hidden == false ? 'text' : `text` : type}
     const click = () => disabled == false ? dispatch("click") : null;
-    const input = () => { if (disabled == false) { dispatch("input"); hidden_columns = hidden_columns + 3; hidden_width_animation.set(hidden == true ? measureText(value) : 0)} }
+    const input = () => { if (disabled == false) { dispatch("input"); hidden_width_animation.set(hidden == true ? measureText(value) : 0)} }
     const focus = () => disabled == false ? border_color = getColor(1000, 'accent') : null;
     const blur = () => disabled == false ? border_color = 'rgba(0,0,0,0)' : null;
     const hover = () => disabled == false ? element_color = 'var(--theme-bg-color-800)' : null;
@@ -156,7 +157,7 @@
     `}
 >   
     {#if $$slots.prefix}
-        <Flex width="16px" height="16px" style="opacity: .5; flex-grow: 1;">
+        <Flex width="16px" height="16px" style="opacity: .5;">
             <slot name="prefix"/> 
         </Flex>
     {/if}
@@ -206,7 +207,7 @@
     </div>
     
     {#if $$slots.postfix}
-        <Flex width="16px" height="16px" style="opacity: .5; flex-grow: 1;">
+        <Flex width="16px" height="16px" style="opacity: .5;">
             <slot name="postfix"/> 
         </Flex>
     {/if}

@@ -83,7 +83,7 @@
 
 <svelte:element this="style">{$theme_store == 'dark' ? getRoot() : getRoot()}</svelte:element>
 
-<style lang="scss">
+<style>
     :global(.xl-ui) {
         color: var(--theme-text-color);
         background-color: var(--theme-bg-color-1000);
@@ -129,5 +129,7 @@
     :global(input::-webkit-outer-spin-button, input::-webkit-inner-spin-button) {
         -webkit-appearance: none;
     }
+
+
 </style>
 
