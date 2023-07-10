@@ -1,6 +1,6 @@
 {
 	"name": "@xl-soft/ui",
-	"version": "2.1.5",
+	"version": "2.2.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
