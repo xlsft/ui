@@ -86,3 +86,10 @@ All components, functions and types are documented with JSDoc for beatiful devel
 <h2 id="license"><strong>📜 License</strong></h2>
 
 [GNU GPLv3](https://github.com/xl-soft/blob/master/LICENSE.md)
+
+<br/>
+<div align="center">
+  <a href="https://vk.com/xlsoftware" target="_blank" rel="noreferrer">
+    <img src="./static/xl.svg" width=150>
+  </a>
+</div>
