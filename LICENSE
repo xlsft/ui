@@ -1,17 +1,3 @@
-# License
-
-Unless stated otherwise all works are:
-
-- Copyright © 2019+ Benjamin Lupton
-
-and licensed under:
-
-- [GNU GPLv3 license](https://choosealicense.com/licenses/gpl-3.0/)
-
-# GNU GPLv3
-
-```
-
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
@@ -686,15 +672,3 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
-работаете программистом)
-или ваше учебное заведение, если таковое имеется, подписали “отказ от
-имущественных прав” на эту программу, если это необходимо.
-Для получения дополнительной информации по этому вопросу, и, как
-применять и следовать Универсальной общественной лицензии GNU, смотрите
-здесь <http://www.gnu.org/licenses/>.
-Универсальная общественная лицензия GNU не позволяет включать вашу
-программу в несвободные. Если Вы хотите это сделать, используйте
-Универсальную общественную лицензию ограниченного применения GNU (GNU
-Lesser General Public License, GNU LGPL) вместо этой лицензии, но,
-пожалуйста, прочитайте сначала здесь <http://www.gnu.org/philosophy/why-not-lgpl.html>
-```
