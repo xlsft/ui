@@ -1,49 +1,57 @@
 <script lang="ts">
-    import Icon from "$lib/media/Icon.svelte";
+
+    // ------------------ Imports ------------------
+    
     import { createEventDispatcher } from "svelte";
-    import { getColor, type Colors, getOptimalTextColor } from "$lib/assets/scripts/colors";
-    import Flex from "$lib/layout/Flex.svelte";
+    import { getColor, getTextColor } from "$lib/colors";
+    import type { Align, Colors } from "$lib/core";
+    import { Flex } from "$lib/ui";
     const dispatch = createEventDispatcher();
     
     // ------------------ Apperance ------------------
 
     /**
      * Set width for component
-     * ```
+     * ``` tsx
      * <Button width="300px"/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let width = "300px";
 
     /**
      * Set height for component
-     * ```
+     * ``` tsx
      * <Button height="50px"/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let height = "40px";
 
     /**
      * Set text align
-     * ```
+     * ``` tsx
      * <Button align="left"/>
      * ```
+     * ```@xl-soft/ui```
      */
-    export let align: "left" | "center" | "right" = "center";
+    export let align: Align = "center";
 
     /**
      * Set element color
-     * ```
+     * ``` tsx
      * <Button border="red"/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let color: Colors = 'accent'
 
     /**
      * Button placeholder
-     * ```
+     * ``` tsx
      * <Button placeholder="E-mail"/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let placeholder: string = ''
 
@@ -51,12 +59,14 @@
 
     /**
      * Disabled switch
-     * ```
+     * ``` tsx
      * <Button disabled/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let disabled = false
 
+    // ------------------ Setup ------------------
 
     let element_color: string = getColor(1000, color)
 
@@ -73,7 +83,7 @@
 
     Here is example usage with example params:
 
-    ```
+    ``` tsx
     <Input
         type="number"
         width="300px"
@@ -108,21 +118,21 @@
         background: ${disabled == false ? element_color : 'var(--theme-disabled)'};
         width: ${width};
         height: ${height};
-        color: ${getOptimalTextColor(color)}
+        color: ${getTextColor(color)}
     `}
 >   
     {#if $$slots.prefix}
-        <Flex width="16px" height="16px" style="opacity: .5; color: {getOptimalTextColor(color)}">
+        <Flex width="16px" height="16px" style="opacity: .5; color: {getTextColor(color)}">
             <slot name="prefix"/> 
         </Flex>
     {/if}
 
-    <span style="flex-grow: 1; color: {getOptimalTextColor(color)}; text-align: {align};">
+    <span style="flex-grow: 1; color: {getTextColor(color)}; text-align: {align};">
         {placeholder}
     </span>
 
     {#if $$slots.postfix}
-        <Flex width="16px" height="16px" style="opacity: .5; color: {getOptimalTextColor(color)}">
+        <Flex width="16px" height="16px" style="opacity: .5; color: {getTextColor(color)}">
             <slot name="postfix"/> 
         </Flex>
     {/if}

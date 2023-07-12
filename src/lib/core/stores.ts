@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable } from "svelte/store"
 
 /**
  * # ```$theme```
@@ -38,4 +38,30 @@ export let theme = writable()
  */
 export let accent = writable()
 
-export let vh = writable()
+/**
+ * # ```theme_store```
+ * 
+ * Dynamic subscribed variable for `$theme`
+ * 
+ * ```ts
+ * $: console.log(theme_store)
+ * ```
+ * 
+ * ```@xl-soft/ui/core```
+ */
+export let theme_store: any
+theme.subscribe((v) => theme_store = v)
+
+/**
+ * # ```accent_store```
+ * 
+ * Dynamic subscribed variable for `$accent`
+ * 
+ * ```ts
+ * $: console.log(accent_store)
+ * ```
+ * 
+ * ```@xl-soft/ui/core```
+ */
+export let accent_store: any
+accent.subscribe((v) => accent_store = v)

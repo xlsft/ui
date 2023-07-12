@@ -1,236 +1,17 @@
-import { accent, theme } from "$lib/stores"
-
-let list = {
-    neutral: {
-        c1000: [0,0,0],
-        c900: [26,26,26],
-        c800: [51,51,51],
-        c700: [77,77,77],
-        c600: [102,102,102],
-        c500: [128,128,128],
-        c400: [153,153,153],
-        c300: [179,179,179],
-        c200: [204,204,204],
-        c100: [230,230,230],
-        c0: [255,255,255],
-        text: [0,0,0],
-    },
-    cobalt: {
-        c1000: [7,9,13],
-        c900: [11,14,20],
-        c800: [14,18,27],
-        c700: [18,23,33],
-        c600: [21,28,40],
-        c500: [25,32,46],
-        c400: [29,37,53],
-        c300: [32,41,60],
-        c200: [36,46,66],
-        c100: [39,50,73],
-        c0: [43,55,80],
-        text: [255,255,255],
-    },
-    sky: {
-        c1000: [142,160,194],
-        c900: [129,148,187],
-        c800: [116,137,180],
-        c700: [103,126,173],
-        c600: [89,115,166],
-        c500: [82,106,152],
-        c400: [75,96,139],
-        c300: [68,87,126],
-        c200: [61,78,113],
-        c100: [53,68,100],
-        c0: [46,59,86],
-        text: [0,0,0],
-    },
-    red: {
-        c1000: [217,38,38],
-        c900: [221,60,60],
-        c800: [225,81,81],
-        c700: [228,103,103],
-        c600: [232,125,125],
-        text: [255,255,255],
-    },
-    orange: {
-        c1000: [217,128,38],
-        c900: [221,140,60],
-        c800: [225,153,82],
-        c700: [228,166,103],
-        c600: [232,178,125],
-        text: [255,255,255],
-    },
-    lime: {
-        c1000: [127,217,38],
-        c900: [140,221,60],
-        c800: [153,225,81],
-        c700: [166,228,103],
-        c600: [178,232,125],
-        text: [0,0,0],
-    },
-    green: {
-        c1000: [38,217,98],
-        c900: [60,221,113],
-        c800: [81,225,129],
-        c700: [103,228,145],
-        c600: [125,232,161],
-        text: [0,0,0],
-    },
-    cyan: {
-        c1000: [38,217,157],
-        c900: [60,221,167],
-        c800: [81,225,177],
-        c700: [103,228,187],
-        c600: [125,232,196],
-        text: [0,0,0],
-    },
-    blue: {
-        c1000: [38,98,217],
-        c900: [60,113,221],
-        c800: [81,129,225],
-        c700: [103,145,228],
-        c600: [125,161,232],
-        text: [255,255,255],
-    },
-    royal: {
-        c1000: [38,38,217],
-        c900: [60,60,221],
-        c800: [81,81,225],
-        c700: [103,103,228],
-        c600: [125,125,232],
-        text: [255,255,255],
-    },
-    violet: {
-        c1000: [98,38,217],
-        c900: [113,60,221],
-        c800: [129,81,225],
-        c700: [145,103,228],
-        c600: [161,125,232],
-        text: [255,255,255],
-    },
-    purple: {
-        c1000: [157,38,217],
-        c900: [167,60,221],
-        c800: [177,81,225],
-        c700: [187,103,228],
-        c600: [196,125,232],
-        text: [255,255,255],
-    },
-    pink: {
-        c1000: [217,38,217],
-        c900: [221,60,221],
-        c800: [225,81,225],
-        c700: [228,103,228],
-        c600: [232,125,232],
-        text: [255,255,255],
-    },
-}
-
+import { theme_store, accent_store } from "$lib/core";
+import { getColor } from "$lib/colors";
 /**
- * # type ```Colors```
+ * # ```getGlobals()```
  * 
- * Type for all colors of UI system
+ * Returns global css variables
  * 
  * ```ts
- * export let color: Colors = 'red'
+ * let root = getGlobals()
  * ```
  * 
- * ```@xl-soft/ui/colors```
+ * ```@xl-soft/ui/core```
  */
-export type Colors = "theme" | "accent" | "neutral" | "cobalt" | "sky" | "red" | "orange" | "lime" | "green" | "cyan" | "blue" | "royal" | "violet" | "purple" | "pink" | ""
-
-/**
- * # type ```Depths``` 
- * 
- * Type for all color depths of UI system
- * 
- * ```ts
- * export let depth: Depths = 1000
- * ```
- * 
- * ```@xl-soft/ui/colors```
- */
-export type Depths = 1000 | 900 | 800 | 700 | 600 | 500 | 400 | 300 | 200 | 100 | 0
-
-/**
- * # type ```Theme``` 
- * 
- * Type for theme store
- * 
- * ```ts
- * let theme_string: Theme = 'system'
- * theme.set(theme_string)
- * ```
- * 
- * ```@xl-soft/ui/colors```
- */
-export type Theme = "system" | "light" | "dark"
-
-/**
- * # type ```AccentColors``` 
- * 
- * Type for all colors that can be used as accent color
- * 
- * ```ts
- * let accent_string: AccentColors = 'red'
- * accent.set(accent_string)
- * ```
- * 
- * ```@xl-soft/ui/colors```
- */
-export type AccentColors = "sky" | "red" | "orange" | "lime" | "green" | "cyan" | "blue" | "royal" | "violet" | "purple" | "pink"
-
-let theme_store: any
-let accent_store: any
-theme.subscribe((v) => theme_store = v)
-accent.subscribe((v) => accent_store = v)
-
-/**
- * # ```getColor()```
- * 
- * Returns RGB color based on UI system
- * 
- * ```ts
- * let color = getColor(1000, 'accent')
- * ```
- * 
- * ```@xl-soft/ui/colors```
- */
-export function getColor(depth: Depths = 1000, name: Colors = 'accent'): string {
-    if (name == 'accent') name = accent_store
-    if (name == 'theme') { depth = theme_store == 'dark' ? 0 : 1000; name = 'neutral' }
-    let color = eval(`list.${name}.c${depth}`)
-    return `rgb(${color[0]},${color[1]},${color[2]})`
-}
-
-/**
- * # ```getOptimalTextColor()```
- * 
- * Returns optimal pair color for text
- * 
- * ```ts
- * let text_color = getOptimalTextColor('red')
- * ```
- * 
- * ```@xl-soft/ui/colors```
- */
-export function getOptimalTextColor(color: Colors): string {
-    let current = color == 'accent' ? accent_store : color
-    let text_color = eval(`list.${current}.text`)
-    return `rgb(${text_color[0]},${text_color[1]},${text_color[2]})`
-}
-
-/**
- * # ```getRoot()```
- * 
- * Returns css variables in :root selector
- * 
- * ```ts
- * let root = getRoot()
- * ```
- * 
- * ```@xl-soft/ui/colors```
- */
-export function getRoot(): string {
+export function getGlobals(): string {
     return `
     :root {
         --neutral-1000: ${getColor(1000, "neutral")};
@@ -341,10 +122,58 @@ export function getRoot(): string {
         border-radius: 5px;
     }
 
+    .xl-ui {
+        color: var(--theme-text-color);
+        background-color: var(--theme-bg-color-1000);
+        transition: 0.4s ease-in-out;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        user-select: none;
+        flex-shrink: 0;
+        transition: 0.4s cubic-bezier(0, 0, 0, 1) 0s;
+        font-family: "Rubik";
+    }
+
+    body {
+        margin: 0;
+        transition: 0s;
+        overflow: hidden;
+    }
+
+    input[type='number'] {
+        appearance:textfield;
+    }
+
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button) {
+        -webkit-appearance: none;
+    }
+
     a {
         color: var(--theme-text-color);
         position: relative;
         margin-right: 25px;
+        text-decoration: none;
     }
     a:hover {
         color: var(--theme-text-color);
@@ -366,9 +195,7 @@ export function getRoot(): string {
         right: -20px;
         top: 50%;
         transform: translateY(-50%);
+        opacity: .5
     }
 `
 }
-
-
-

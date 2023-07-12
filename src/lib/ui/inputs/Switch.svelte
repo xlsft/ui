@@ -1,68 +1,71 @@
 <script lang="ts">
-    import Icon from "$lib/media/Icon.svelte";
+
+    // ------------------ Imports ------------------
+
+    import { Icon } from "$lib/ui";
     import { createEventDispatcher } from "svelte";
-    import { getColor } from "$lib/assets/scripts/colors";
-    import type { Colors, Depths } from "$lib/assets/scripts/colors";
-    import { theme as theme_store } from "../stores";
+    import { getColor } from "$lib/colors";
+    import type { Colors, Depths } from "$lib/core";
+    import { theme as theme_store } from "$lib/core";
     import { tweened } from "svelte/motion";
     import { cubicInOut } from "svelte/easing";
+    const dispatch = createEventDispatcher();
     
     // ------------------ Apperance ------------------
 
     /**
      * Set color for component
-     * ```
+     * ``` tsx
      * <Switch color="red"/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let color: Colors = "accent";
     
     /**
      * Set depth for component color
-     * ```
+     * ``` tsx
      * <Switch depth={1000}/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let depth: Depths = 1000;
     
     /**
      * Set depth for component color on hover
-     * ```
+     * ``` tsx
      * <Switch depth_hover={900}/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let depth_hover: Depths = 700;
 
     /**
      * Set color for active component
-     * ```
+     * ``` tsx
      * <Switch active_color="green"/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let active_color: Colors = color;
     
     /**
      * Set depth for active component color
-     * ```
+     * ``` tsx
      * <Switch active_depth={1000}/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let active_depth: Depths = 1000;
     
     /**
      * Set depth for active component color on hover
-     * ```
+     * ``` tsx
      * <Switch active_depth_hover={900}/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let active_depth_hover: Depths = 700;
-
-    let element_color = getColor(depth, color);
-    let element_hover_color = getColor(depth_hover, color);
-    let element_active_color = getColor(active_depth, active_color);
-    let element_active_hover_color = getColor(active_depth_hover, active_color);
-    let element_color_value: string = element_color;
-    let element_theme: any; theme_store.subscribe((v) => element_theme = v);
 
     // ------------------ Animation ------------------
 
@@ -74,7 +77,7 @@
 
     /**
      * Value of switch
-     * ```
+     * ``` tsx
      * <Switch value={true}/>
      *
      * <!-- or -->
@@ -85,27 +88,37 @@
      *
      * <Switch bind:value/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let value: boolean = false;
 
     /**
      * Disabled feature switch
-     * ```
+     * ``` tsx
      * <Switch disabled/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let disabled: boolean = false;
 
     /**
      * Theme switcher (dark, light)
-     * ```
+     * ``` tsx
      * <Switch theme/>
      * ```
-     * @return {HTMLElement} param
+     * ```@xl-soft/ui```
      */
      export let theme: boolean = false;
 
-    const dispatch = createEventDispatcher();
+    // ------------------ Setup ------------------
+
+    let element_color = getColor(depth, color);
+    let element_hover_color = getColor(depth_hover, color);
+    let element_active_color = getColor(active_depth, active_color);
+    let element_active_hover_color = getColor(active_depth_hover, active_color);
+    let element_color_value: string = element_color;
+    let element_theme: any; theme_store.subscribe((v: any) => element_theme = v);
+    
     $: if (value == true) {
         knob_pos.set(base_pos.end);
         knob_shadow_1_pos.set(base_pos.end);
@@ -151,7 +164,7 @@
 
     Here is example usage with example params:
 
-    ```
+    ``` tsx
     <Switch
         color="red"
         depth={1000}

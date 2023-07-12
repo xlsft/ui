@@ -3,7 +3,7 @@
 	"version": "2.2.0",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && npm run package",
+		"build": "vite build",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",
 		"prepublish": "npm run package",
@@ -12,16 +12,16 @@
 	},
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+			"types": "./dist/ui/index.d.ts",
+			"svelte": "./dist/ui/index.js"
 		},
 		"./colors": {
-			"types": "./dist/colors.d.ts",
-			"svelte": "./dist/colors.js"
+			"types": "./dist/colors/index.d.ts",
+			"svelte": "./dist/colors/index.js"
 		},
 		"./core": {
-			"types": "./dist/core.d.ts",
-			"svelte": "./dist/core.js"
+			"types": "./dist/core/index.d.ts",
+			"svelte": "./dist/core/index.js"
 		}
 	},
 	"files": [
@@ -33,9 +33,11 @@
 		"svelte": "^4.0.0"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-auto": "^2.1.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@sveltejs/package": "^2.0.0",
+		"create-svelte": "^5.0.3",
+		"latest-version": "^7.0.0",
 		"publint": "^0.1.9",
 		"svelte": "^4.0.0",
 		"svelte-check": "^3.4.3",
@@ -45,9 +47,9 @@
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
+	"main": "./dist/bin.js",
 	"type": "module",
 	"dependencies": {
-		"create-svelte": "^5.0.2",
-		"latest-version": "^7.0.0"
+		"prompts": "^2.4.2"
 	}
 }

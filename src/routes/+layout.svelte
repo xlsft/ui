@@ -1,5 +1,5 @@
 <script>
-    import { Flex, Main } from "../lib/index"
+    import { Flex, Main } from "$lib/ui"
 </script>
 
 <Main accent="violet" theme="dark">

@@ -1,89 +1,149 @@
 <script lang="ts">
+
+    // ------------------ Imports ------------------
+    
     import { onMount } from "svelte";
+    import type { FlexDirection, FlexWrap, JustifyContent, AlignItems, AlignContent } from "$lib/core";
 
-    // ------------------ Types ------------------
-
-    type FlexDirection = "row" | "row-reverse" | "column" | "column-reverse";
-    type FlexWrap = "nowrap" | "wrap" | "wrap-reverse";
-    type JustifyContent =
-    | "flex-start"
-    | "flex-end"
-    | "center"
-    | "space-between"
-    | "space-around"
-    | "space-evenly";
-    type AlignItems = "flex-start" | "flex-end" | "center" | "baseline" | "stretch";
-    type AlignContent =
-    | "flex-start"
-    | "flex-end"
-    | "center"
-    | "space-between"
-    | "space-around"
-    | "stretch";
-
-    // ------------------ Preferences ------------------
+    // ------------------ Attributes ------------------
 
     /**
      * Additional styles
-     * ```
+     * ``` tsx
      *  <Flex style="pointer-events: none;">
      *      ...
      *  <Flex/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let style: string = "";
 
     /**
      * Set width for flex container
-     * ```
+     * ``` tsx
      *  <Flex width="100%">
      *      ...
      *  <Flex/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let width: string = "";
 
     /**
      * Set height for flex container
-     * ```
+     * ``` tsx
      *  <Flex height="100%">
      *      ...
      *  <Flex/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let height: string = "";
         
-    // ------------------ Overflow ------------------
+    // ------------------ Attributes (overflow) ------------------
 
     /**
      * Switch for overflow-x
-     * ```
+     * ``` tsx
      *  <Flex x>
      *      ...
      *  <Flex/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let x: boolean = false;
 
     /**
      * Switch for overflow-y
-     * ```
+     * ``` tsx
      *  <Flex y>
      *      ...
      *  <Flex/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let y: boolean = false;
 
     /**
      * Switch for scrollbar visibility
-     * ```
+     * ``` tsx
      *  <Flex bar>
      *      ...
      *  <Flex/>
      * ```
+     * ```@xl-soft/ui```
      */
     export let bar: boolean = false;
+
+    // ------------------ Attributes (flex) ------------------
+
+    /**
+     * "flex-direction" flex property
+     * ``` tsx
+     *  <Flex direction="row">
+     *      ...
+     *  <Flex/>
+     * ```
+     * ```@xl-soft/ui```
+     */
+    export let direction: FlexDirection = "row";
+
+    /**
+     * "justify-content" flex property
+     * ``` tsx
+     *  <Flex justify="center">
+     *      ...
+     *  <Flex/>
+     * ```
+     * ```@xl-soft/ui```
+     */
+    export let justify: JustifyContent = "center";
+
+    /**
+     * "align-items" flex property
+     * ``` tsx
+     *  <Flex align="center">
+     *      ...
+     *  <Flex/>
+     * ```
+     * ```@xl-soft/ui```
+     */
+    export let align: AlignItems = "center";
+
+    /**
+     * "flex-wrap" flex property
+     * ``` tsx
+     *  <Flex wrap="nowrap">
+     *      ...
+     *  <Flex/>
+     * ```
+     * ```@xl-soft/ui```
+     */
+    export let wrap: FlexWrap = "nowrap";
+
+    /**
+     * "align-content" flex property
+     * ``` tsx
+     *  <Flex align_content="center">
+     *      ...
+     *  <Flex/>
+     * ```
+     * ```@xl-soft/ui```
+     */
+    export let align_content: AlignContent = "center";
+
+    /**
+     * "gap" flex property
+     * ``` tsx
+     *  <Flex gap="25px">
+     *      ...
+     *  </Flex>
+     * ```
+     * ```@xl-soft/ui```
+     */
+    export let gap: string = "25px";
+
+    // ------------------ Setup ------------------
 
     let overflow: HTMLElement;
 
@@ -96,68 +156,6 @@
         }
     });
 
-    // ------------------ Flex ------------------
-
-    /**
-     * "flex-direction" flex property
-     * ```
-     *  <Flex direction="row">
-     *      ...
-     *  <Flex/>
-     * ```
-     */
-    export let direction: FlexDirection = "row";
-
-    /**
-     * "justify-content" flex property
-     * ```
-     *  <Flex justify="center">
-     *      ...
-     *  <Flex/>
-     * ```
-     */
-    export let justify: JustifyContent = "center";
-
-    /**
-     * "align-items" flex property
-     * ```
-     *  <Flex align="center">
-     *      ...
-     *  <Flex/>
-     * ```
-     */
-    export let align: AlignItems = "center";
-
-    /**
-     * "flex-wrap" flex property
-     * ```
-     *  <Flex wrap="nowrap">
-     *      ...
-     *  <Flex/>
-     * ```
-     */
-    export let wrap: FlexWrap = "nowrap";
-
-    /**
-     * "align-content" flex property
-     * ```
-     *  <Flex align_content="center">
-     *      ...
-     *  <Flex/>
-     * ```
-     */
-    export let align_content: AlignContent = "center";
-
-    /**
-     * "gap" flex property
-     * ```
-     *  <Flex gap="25px">
-     *      ...
-     *  </Flex>
-     * ```
-     */
-    export let gap: string = "25px";
-
 </script>
 
 <!-- 
@@ -168,7 +166,7 @@
 
     Here is example usage with example params:
 
-    ```
+    ``` tsx
     <Flex 
         style="pointer-events: none;"
         width="100%"

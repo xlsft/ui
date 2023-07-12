@@ -1,91 +1,88 @@
-# TODO
+<br/>
+<br/>
+<div align="middle">
+    <img src="./static/logo.png" height=100>
+</div>
 
-## ./core (CSS):
-### basic
-- [x] body
-- [x] selection
-- [x] scrollbar
-### typography
-- [ ] h1, h2, h3, h4, h5, h6
-- [ ] paragraph
-- [x] anchor (link)
-- [ ] label
-- [ ] bloquote
-### elements 
-- [ ] loading (spinner) (custom element api)
-- [ ] card (content zone) (custom element api)
-- [ ] skeleton (animated div on loading) (custom element api)
-- [ ] badge (custom element api)
-- [ ] hbr,vbr (horizontal / vertical dividers) (custom element api)
-- [ ] ul / li
+#
 
+<h3 align="center">
+    <strong>XL Software UI</strong> - fully JSDoc documented, SSR compatible, type safe Svelte 4 UI-kit 
+</h3>
+<br/>
+<p align="right">
+    <img src="./static/madewith.png" />
+    <img src="./static/svelte.png" />
+    <img src="./static/typescript.png" />
+</p>
 
-## ./colors (Theme and colors):
-- [x] themes
-- [x] accent
-- [x] colors
+> **XL Software UI** - Next Generation Svelte 4 UI-kit for creating beautiful interfaces with excellent User Expirience
 
-## ./ (ui):
-### layout
-- [x] main (ui wrapper)
-- [x] flex
-- [ ] grid
-- [ ] table (wrapper, head, body, foot, items)
-- [ ] accordions (wrapper, items)
-- [ ] pagination (wrapper, items)
-- [ ] steps (wrapper, items)
-- [ ] tabs (wrapper, items)
-- [ ] dropdown (wrapper, items)
-- [ ] gallery (wrapper, items)
-- [ ] carousel gallery (wrapper, items)
-- [ ] breadcrumbs
-### input
-- [x] button
-- [x] input 
-    - [ ] range
-- [x] switch
-    - [x] light switch
-- [ ] chips (wrapper / items)
-- [ ] file 
-    - [ ] document 
-    - [ ] image
-- [ ] filedrop
-    - [ ] document 
-    - [ ] image (possibly with image editor)
-- [ ] date & time (calendar)
-- [ ] amount (- number +)
-- [ ] textarea
-- [ ] select (wrapper / items)
-- [ ] checkbox (wrapper / items)
-- [ ] radio (wrapper / items)
-- [ ] radio group (wrapper / items)
-- [ ] range
-- [ ] color
-- [ ] rating
-- [ ] quick actions
-- [ ] auth key
-- [ ] form
-### media
-- [x] icon
-- [x] image
-- [x] video
-- [ ] avatar
-- [ ] code
-### info
-- [ ] progress bar
-- [ ] progress radial
-- [ ] radial (donut/pie) chart
-- [ ] bar chart
-- [ ] line chart
-### effects
-- [x] noise
+<h2 id="install"><strong>🔗 Useful Links</strong></h2>
 
+* <a href="#install">Installation</a>
+* <a href="#docs">Documentation</a>
+* <a href="#community">Community</a>
+* <a href="#sponsor">Donations</a>
+* <a href="#bugs">Bug report</a>
+* <a href="#license">License</a>
 
-## ./utils (Utilities and call functions):
-### call functions
-- [ ] dialog and modal
-- [ ] drawer whit touch support
-- [ ] toast notification
-- [ ] favicon & title notification
-- [ ] tooltip
-- [ ] dropdown
+<h2 id="install"><strong>💾 Installation</strong></h2>
+
+### **From scratch:**
+
+``` bash
+npm create @xl-soft/ui@latest
+```
+
+### **Import in existing project:**
+
+``` bash
+npm i @xl-soft/ui@latest
+```
+
+> Then add to your tsconfig.json
+
+```json
+{
+    "compilerOptions": {
+        "moduleResolution": "Bundler"
+    },
+}
+```
+
+### You are ready to go!
+
+![Template](./static/template.png)
+
+<h2 id="docs"><strong>📄 Documentation</strong></h2>
+
+### **JSDoc**
+
+All components, functions and types are documented with JSDoc for beatiful developer expirience
+
+![JSDoc Tooltip](./static/jsdoc.png)
+
+### **Full documentation**
+
+⚠️ WORK IN PROGRESS ⚠️
+
+<h2 id="community"><strong>👋 Community</strong></h2>
+
+⚠️ WORK IN PROGRESS ⚠️
+
+<h2 id="sponsor"><strong>💸 Donations</strong></h2>
+
+⚠️ WORK IN PROGRESS ⚠️
+
+<h2 id="bugs"><strong>🐞 Bug report</strong></h2>
+<br/>
+<div align="middle">
+    <a href="" >
+        <img src="./static/bug.png"  height=40>
+    </a>
+</div>
+
+<h2 id="license"><strong>📜 License</strong></h2>
+
+[GNU GPLv3](https://github.com/xl-soft/blob/master/LICENSE.md)
