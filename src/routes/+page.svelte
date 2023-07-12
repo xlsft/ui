@@ -50,8 +50,8 @@
     {:then data}
         <a href={data[0].html_url} target="_blank" rel="noreferrer">Latest release: v{data[0].tag_name.split('@')[1]}</a>
     {/await}
-    <a href={""} target="_blank" rel="noreferrer">NPM</a>
-    <a href={""} target="_blank" rel="noreferrer">GitHub</a>
+    <a href="https://www.npmjs.com/package/@xl-soft/ui" target="_blank" rel="noreferrer">NPM</a>
+    <a href="https://github.com/xl-soft/ui" target="_blank" rel="noreferrer">GitHub</a>
 </Flex>
 
 <Flex justify="flex-end" style="position: absolute; bottom: 50px; right: 50px">

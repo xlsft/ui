@@ -4,9 +4,6 @@
 
     import { theme as theme_store, accent as accent_store, getGlobals } from "$lib/core";
     import type { AccentColors, Theme } from "$lib/core";
-    import { writable } from "svelte/store";
-    import "$lib/core/fonts/font-faces.css";
-    import { afterUpdate } from "svelte";
     
     // ------------------ Apperance ------------------
 
@@ -36,22 +33,6 @@
 
     theme_store.set(theme);
     accent_store.set(accent);
-
-    afterUpdate(() => {
-        // if (theme == "system") {
-        //     const system = window.matchMedia("(prefers-color-scheme: dark)");
-        //     if (system.matches) theme_store.set("dark");
-        //     else theme_store.set("light");
-        //     window
-        //         .matchMedia("(prefers-color-scheme: dark)")
-        //         .addEventListener("change", (e) => {
-        //             if (e.matches) theme_store.set("dark");
-        //             else theme_store.set("light");
-        //         });
-        // };
-    })
-
-
     
 </script>
 
@@ -71,6 +52,12 @@
 
     ```@xl-soft/ui```
 -->
+
+<svelte:head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</svelte:head>
 
 <main
     class={`xl-ui`}
@@ -92,3 +79,27 @@
 </main>
 
 <svelte:element this="style">{$theme_store == 'dark' ? getGlobals() : getGlobals()}</svelte:element>
+
+
+<style>
+    :global(*) {
+        box-sizing: border-box;
+        margin: 0;
+        user-select: none;
+        flex-shrink: 0;
+        transition: 0.4s cubic-bezier(0, 0, 0, 1) 0s;
+        font-family: "Rubik";
+    }
+
+    :global(body) {
+        margin: 0;
+        transition: 0s;
+        overflow: hidden;
+    }
+
+    :global(.xl-ui) {
+        color: var(--theme-text-color);
+        background-color: var(--theme-bg-color-1000);
+        transition: 0.4s ease-in-out;
+    }
+</style>

@@ -16,7 +16,7 @@
     <img src="./static/typescript.png" />
 </p>
 
-> **XL Software UI** - Next Generation Svelte 4 UI-kit for creating beautiful interfaces with excellent User Expirience
+> **XL Software UI** - next-gen Svelte UI-kit for creating beautiful interfaces with excellent UX 
 
 <h2 id="install"><strong>🔗 Useful Links</strong></h2>
 
