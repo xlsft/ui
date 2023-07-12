@@ -57,4 +57,3 @@
 <Flex justify="flex-end" style="position: absolute; bottom: 50px; right: 50px">
     <img src="http://xluiassets.deno.dev/logo/xlsoftware/logo{$theme == 'dark' ? '-dark' : '-light'}" alt="" style="width: 150px;">
 </Flex>
-

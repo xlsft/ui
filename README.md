@@ -26,6 +26,8 @@
 * <a href="#sponsor">Donations</a>
 * <a href="#bugs">Bug report</a>
 * <a href="#license">License</a>
+* <a href="https://github.com/xl-soft/ui-assets">XL Software UI Assets</a>
+* <a href="https://github.com/xl-soft/create-ui">create-ui</a>
 
 <h2 id="install"><strong>💾 Installation</strong></h2>
 
