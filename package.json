@@ -1,6 +1,6 @@
 {
 	"name": "@xl-soft/ui",
-	"version": "2.2.0",
+	"version": "2.2.1-stable",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -37,8 +37,6 @@
 		"@sveltejs/kit": "^1.20.4",
 		"@sveltejs/package": "^2.0.0",
 		"@types/prompts": "^2.4.4",
-		"create-svelte": "^5.0.3",
-		"latest-version": "^7.0.0",
 		"publint": "^0.1.9",
 		"svelte": "^4.0.0",
 		"svelte-check": "^3.4.3",
@@ -50,7 +48,13 @@
 	"types": "./dist/ui/index.d.ts",
 	"main": "./dist/bin.js",
 	"type": "module",
-	"dependencies": {
-		"prompts": "^2.4.2"
-	}
+	"repository": {
+		"type": "git",
+		"url": "https://githib.com/xl-soft/create-ui"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"author": "XL Software",
+	"license": "GNU GPLv3"
 }
