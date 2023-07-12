@@ -78,7 +78,7 @@ All components, functions and types are documented with JSDoc for beatiful devel
 <h2 id="bugs"><strong>🐞 Bug report</strong></h2>
 <br/>
 <div align="middle">
-    <a href="" >
+    <a href="https://github.com/xl-soft/ui/issues/new/choose" >
         <img src="./static/bug.png"  height=40>
     </a>
 </div>
