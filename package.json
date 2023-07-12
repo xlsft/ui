@@ -46,7 +46,6 @@
 	},
 	"svelte": "./dist/ui/index.js",
 	"types": "./dist/ui/index.d.ts",
-	"main": "./dist/bin.js",
 	"type": "module",
 	"repository": {
 		"type": "git",
