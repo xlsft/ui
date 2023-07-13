@@ -1,7 +1,7 @@
 <br/>
 <br/>
 <div align="middle">
-    <img src="./static/logo.png" height=100>
+    <img src="https://xluiassets.deno.dev/logo/ui/logo-dark" height=100>
 </div>
 
 #
@@ -11,9 +11,9 @@
 </h3>
 <br/>
 <p align="right">
-    <img src="./static/madewith.png" />
-    <img src="./static/svelte.png" />
-    <img src="./static/typescript.png" />
+    <img src="https://i.imgur.com/XfArZkI.png" />
+    <img src="https://i.imgur.com/ZXDQfPA.png" />
+    <img src="https://i.imgur.com/h8cehu5.png" />
 </p>
 
 > **XL Software UI** - next-gen Svelte UI-kit for creating beautiful interfaces with excellent UX 
@@ -55,7 +55,7 @@ npm i @xl-soft/ui@latest
 
 ### You are ready to go!
 
-![Template](./static/template.png)
+![Template](https://i.imgur.com/kGvb8TQ.png)
 
 <h2 id="docs"><strong>📄 Documentation</strong></h2>
 
@@ -63,7 +63,7 @@ npm i @xl-soft/ui@latest
 
 All components, functions and types are documented with JSDoc for beatiful developer expirience
 
-![JSDoc Tooltip](./static/jsdoc.png)
+![JSDoc Tooltip](https://i.imgur.com/yWT72uW.png)
 
 ### **Full documentation**
 
@@ -81,7 +81,7 @@ All components, functions and types are documented with JSDoc for beatiful devel
 <br/>
 <div align="middle">
     <a href="https://github.com/xl-soft/ui/issues/new/choose" >
-        <img src="./static/bug.png"  height=40>
+        <img src="https://i.imgur.com/7x5Rq8M.png"  height=35>
     </a>
 </div>
 
@@ -92,6 +92,6 @@ All components, functions and types are documented with JSDoc for beatiful devel
 <br/>
 <div align="center">
   <a href="https://vk.com/xlsoftware" target="_blank" rel="noreferrer">
-    <img src="./static/xl.svg" width=150>
+    <img src="https://i.imgur.com/uz0kNQz.png" width=150>
   </a>
 </div>
