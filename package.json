@@ -1,6 +1,6 @@
 {
 	"name": "@xl-soft/ui",
-	"version": "2.2.5-stable",
+	"version": "2.2.6-stable",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
