@@ -1,7 +1,7 @@
 <br/>
 <br/>
 <div align="middle">
-    <img src="https://xluiassets.deno.dev/logo/ui/logo-dark" height=100>
+    <img src="https://i.imgur.com/7YGA9Jv.png" height=120>
 </div>
 
 #
@@ -92,6 +92,6 @@ All components, functions and types are documented with JSDoc for beatiful devel
 <br/>
 <div align="center">
   <a href="https://vk.com/xlsoftware" target="_blank" rel="noreferrer">
-    <img src="https://i.imgur.com/uz0kNQz.png" width=150>
+    <img src="https://i.imgur.com/xxZkZfo.png" width=300>
   </a>
 </div>
