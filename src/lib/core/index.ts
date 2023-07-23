@@ -1,4 +1,4 @@
-import { accent, theme, accent_store, theme_store } from "./stores";
+import { accent, theme, roundness, accent_store, theme_store, roundness_store } from "./stores";
 import type {
     IconSets,
     IconCategories,
@@ -19,7 +19,7 @@ import type {
 } from "./types";
 import { getGlobals } from "./global";
 
-export { accent, theme, accent_store, theme_store, getGlobals};
+export { accent, theme, roundness, accent_store, theme_store, roundness_store, getGlobals };
 
 export type {
     IconSets,

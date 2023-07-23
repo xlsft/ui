@@ -1,4 +1,5 @@
 import { writable } from "svelte/store"
+import type { AccentColors, Theme } from "$lib/core"
 
 /**
  * # ```$theme```
@@ -20,7 +21,7 @@ import { writable } from "svelte/store"
  * 
  * ```@xl-soft/ui/core```
  */
-export let theme = writable()
+export let theme = writable<Theme>()
 
 /**
  * # ```$accent```
@@ -36,7 +37,22 @@ export let theme = writable()
  * 
  * ```@xl-soft/ui/core```
  */
-export let accent = writable()
+export let accent = writable<AccentColors>()
+
+/**
+ * # ```$roundness```
+ * 
+ * Global roundness number variable 
+ * 
+ * ```ts
+ * console.log($roundness) // 8
+ * roundness.set(12)
+ * console.log($roundness) // 12
+ * ```
+ * 
+ * ```@xl-soft/ui/core```
+ */
+export let roundness = writable<string>()
 
 /**
  * # ```theme_store```
@@ -65,3 +81,17 @@ theme.subscribe((v) => theme_store = v)
  */
 export let accent_store: any
 accent.subscribe((v) => accent_store = v)
+
+/**
+ * # ```roundness_store```
+ * 
+ * Dynamic subscribed variable for `$roundness`
+ * 
+ * ```ts
+ * $: console.log(roundness_store)
+ * ```
+ * 
+ * ```@xl-soft/ui/core```
+ */
+export let roundness_store: any
+roundness.subscribe((v) => roundness_store = v)

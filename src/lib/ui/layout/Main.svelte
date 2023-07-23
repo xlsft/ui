@@ -2,7 +2,7 @@
     
     // ------------------ Imports ------------------
 
-    import { theme as theme_store, accent as accent_store, getGlobals } from "$lib/core";
+    import { theme as theme_store, accent as accent_store, getGlobals, roundness as roundness_store } from "$lib/core";
     import type { AccentColors, Theme } from "$lib/core";
     
     // ------------------ Apperance ------------------
@@ -29,10 +29,22 @@
      */
     export let accent: AccentColors = "blue";
 
+    /**
+     * Set roundness in px for XL UI
+     * ``` tsx
+     *  <Main roundness="12px">
+     *      ...
+     *  <Main/>
+     * ```
+     * ```@xl-soft/ui```
+     */
+    export let roundness: string = "8px";
+
     // ------------------ Setup ------------------
 
     theme_store.set(theme);
     accent_store.set(accent);
+    roundness_store.set(roundness)
     
 </script>
 

@@ -1,4 +1,4 @@
-import { theme_store, accent_store } from "$lib/core";
+import { theme_store, accent_store, roundness_store } from "$lib/core";
 import { getColor } from "$lib/colors";
 
 export default (): string => {
@@ -105,6 +105,7 @@ export default (): string => {
             --theme-accent-color-800: ${getColor(800, accent_store)};
             --theme-accent-color-700: ${getColor(700, accent_store)};
             --theme-accent-color-600: ${getColor(600, accent_store)};   
+            --theme-roundness: ${roundness_store}px;
         }
     `
 }
