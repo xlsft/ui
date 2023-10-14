@@ -87,7 +87,7 @@ All components, functions and types are documented with JSDoc for beatiful devel
 
 <h2 id="license"><strong>📜 License</strong></h2>
 
-[GNU GPLv3](https://github.com/xl-soft/blob/master/LICENSE.md)
+[MIT](https://github.com/xl-soft/ui/blob/master/LICENSE)
 
 <br/>
 <div align="center">
