@@ -93,25 +93,27 @@
     let border_color: string = 'rgba(0,0,0,0)';
     let hidden = type == 'password' ? true : false;
     let hidden_width = 0
+    // I dunno how, but its working, i was high when i create this shit
     let hidden_columns = Math.round(hidden_width / 7) + 3
+    
     let hidden_width_animation = tweened(0, { duration: 50, easing: expoInOut });
 
     async function measureText(value: string): Promise<number> {
         let width: number
-        onMount(() => {
-            let div = document.createElement('div');
-            div.innerText = value;
-            div.style.fontSize ='16px';
-            div.style.width = 'auto';
-            div.style.display = 'inline-block';
-            div.style.visibility = 'hidden';
-            div.style.position = 'fixed';
-            div.style.overflow = 'auto';
-            document.body.append(div)
-            hidden_width = div.clientWidth;
-            width = div.clientWidth;
-            div.remove();
-        })
+        let div = document.createElement('div');
+        div.innerText = value;
+        div.style.fontSize ='16px';
+        div.style.width = 'auto';
+        div.style.display = 'inline-block';
+        div.style.visibility = 'hidden';
+        div.style.position = 'fixed';
+        div.style.overflow = 'auto';
+        document.body.append(div)
+        hidden_width = div.clientWidth;
+        hidden_columns = Math.round(hidden_width / 7) + 3
+        width = div.clientWidth;
+        console.log(hidden_columns)
+        div.remove();
         return width
     };
 
@@ -119,7 +121,7 @@
         size.width = element.offsetWidth - (type == 'password' ? 26 : 0) - ($$slots.prefix ? 26 : 0) - ($$slots.postfix ? 26 : 0);
         size.height = element.offsetHeight - 20
         input_size.width = input_element.offsetWidth
-        if (disabled == false && type == 'number') hidden_width_animation.set(hidden_width)
+        if (disabled == false && type == 'password') hidden_width_animation.set(hidden_width)
     })
 
     const element_type = (node: any): any => { node.type = type == 'password' ? hidden == false ? 'text' : `text` : type}
@@ -130,7 +132,6 @@
     const hover = () => disabled == false ? element_color = 'var(--theme-bg-color-800)' : null;
     const leave = () => disabled == false ? element_color = 'var(--theme-bg-color-900)' : null;
     const hide = () => { if (hidden == false) { hidden = true; hidden_width_animation.set(hidden_width) } else { hidden = false; hidden_width_animation.set(0) } }
-    
 </script>
 
 <!-- 
@@ -161,6 +162,7 @@
 
     ```@xl-soft/ui```
 -->
+
 <div 
     class={`xl-ui-input`}
     bind:this={element}
@@ -179,6 +181,7 @@
         border: 2px solid ${disabled == false ? border ? border : border_color : 'rgba(0,0,0,0)'}
     `}
 >   
+
     {#if $$slots.prefix}
         <Flex width="16px" height="16px" style="opacity: .5;">
             <slot name="prefix"/> 
@@ -225,7 +228,6 @@
                 left: 0px; 
                 transform: translate(0%,-50%);
             `}
-            
         />
     </div>
     
@@ -237,7 +239,7 @@
 
     {#if type == 'password'}
         <Flex width="16px" height="16px">
-            <Icon button={!disabled} on:click={hide} opacity={disabled ? 0.5 : 1} category="auth" name={hidden == true ? 'hidden' : 'showed'}/>
+            <Icon button={!disabled} on:click={hide} opacity={disabled ? 0.5 : 1} set="line" category="auth" name={hidden == true ? 'hidden' : 'showed'}/>
         </Flex>
     {/if}
 </div>
